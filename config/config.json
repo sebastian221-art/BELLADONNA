@@ -1,0 +1,23 @@
+{
+  "sistema": {
+    "nombre": "Belladonna",
+    "version": "0.1.1",
+    "diminutivo": "Bell",
+    "fecha_creacion": "2025-01-26"
+  },
+  "bucles": {
+    "pensamiento_frecuencia": 60,
+    "evaluacion_frecuencia": 120,
+    "aprendizaje_frecuencia": 600
+  },
+  "umbrales": {
+    "coherencia_minima": 40,
+    "tension_alerta": 85,
+    "estabilidad_minima": 40
+  },
+  "nivel_autonomia": 1,
+  "logging": {
+    "nivel": "INFO",
+    "archivo": "logs/belladonna.log"
+  }
+}

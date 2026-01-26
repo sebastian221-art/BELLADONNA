@@ -1,0 +1,11 @@
+# Belladonna - Sistema Cognitivo Autónomo
+# Dependencias mínimas para v0.1
+
+# No hay dependencias externas para el MVP básico
+# Todo se construye con Python standard library
+
+# Futuras dependencias (comentadas por ahora):
+# requests>=2.31.0        # Para web scraping
+# beautifulsoup4>=4.12.0  # Para parsing HTML
+# numpy>=1.24.0           # Para cálculos
+# pandas>=2.0.0           # Para análisis de datos

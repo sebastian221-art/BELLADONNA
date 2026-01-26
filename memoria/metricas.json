@@ -1,0 +1,12 @@
+{
+  "metricas_actuales": {
+    "coherencia_global": 100,
+    "tension_cognitiva": 0,
+    "estabilidad": 100.0,
+    "apego_proyecto": 0.0,
+    "curiosidad": 50.0,
+    "confianza_mutua": 50.0
+  },
+  "historial": [],
+  "ultima_actualizacion": "2026-01-26T13:36:27.935638"
+}
