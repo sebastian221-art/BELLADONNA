@@ -9,3 +9,4 @@
 # beautifulsoup4>=4.12.0  # Para parsing HTML
 # numpy>=1.24.0           # Para cálculos
 # pandas>=2.0.0           # Para análisis de datos
+
