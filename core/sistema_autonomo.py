@@ -1,7 +1,7 @@
 """
 Sistema Autónomo Principal
-Orquestador de Belladonna - v0.2
-CON AUTOCONOCIMIENTO Y APRENDIZAJE ACELERADO
+Orquestador de Belladonna - v0.3
+CON AUTO-MODIFICACIÓN, PENSAMIENTO REAL Y AUTO-ANÁLISIS
 """
 
 import time
@@ -11,6 +11,9 @@ from core.memoria import MemoriaViva
 from core.valores import ValoresNucleo
 from core.estado_interno import EstadoInterno
 from core.razonamiento import MotorRazonamiento
+from core.auto_modificacion import AutoModificador
+from core.pensamiento_autonomo import PensamientoAutonomo
+from core.auto_analisis_codigo import AutoAnalisisCodigo
 from core.introspection import Introspector
 from core.conversacion_activa import ConversacionActiva
 from core.auto_explicacion import AutoExplicador
@@ -22,17 +25,22 @@ from pathlib import Path
 
 class Belladonna:
     """
-    Sistema Cognitivo Autónomo v0.2
+    Sistema Cognitivo Autónomo v0.3
     
-    NUEVAS CAPACIDADES:
+    NUEVAS CAPACIDADES v0.3:
+    - Auto-modificación segura
+    - Pensamiento autónomo REAL (toma acciones)
+    - Auto-análisis de código propio
+    - Wikipedia funcional integrada
+    
+    CAPACIDADES v0.2:
     - Autoconocimiento profundo
     - Memoria de conversación actual
     - Aprendizaje acelerado
-    - Búsqueda de conocimiento (Wikipedia)
     """
     
     def __init__(self):
-        print("🌿 Inicializando Belladonna v0.2...")
+        print("🌿 Inicializando Belladonna v0.3...")
         
         # Configuración
         self.config = self._cargar_config()
@@ -44,7 +52,12 @@ class Belladonna:
         self.estado = EstadoInterno()
         self.razonamiento = MotorRazonamiento(self.memoria, self.valores, self.estado)
         
-        # NUEVOS componentes v0.2
+        # NUEVOS componentes v0.3
+        self.auto_mod = AutoModificador()
+        self.pensamiento = PensamientoAutonomo(self)
+        self.auto_analisis = AutoAnalisisCodigo()
+        
+        # Componentes v0.2
         self.introspector = Introspector(self)
         self.conversacion_activa = ConversacionActiva()
         self.auto_explicador = AutoExplicador(self)
@@ -58,7 +71,7 @@ class Belladonna:
         # Bucles de pensamiento
         self.threads = []
         
-        logging.info("Belladonna v0.2 inicializada correctamente")
+        logging.info("Belladonna v0.3 inicializada correctamente")
     
     def _cargar_config(self):
         """Carga configuración desde archivo"""
@@ -69,7 +82,7 @@ class Belladonna:
         except FileNotFoundError:
             logging.warning("Archivo de configuración no encontrado. Usando valores por defecto.")
             return {
-                'version': '0.2.0',
+                'version': '0.3.0',
                 'nivel_autonomia': 1,
                 'bucles': {
                     'pensamiento_frecuencia': 60,
@@ -99,11 +112,11 @@ class Belladonna:
     def despertar(self):
         """Inicia el sistema - equivalente a 'nacer'"""
         print("\n" + "="*60)
-        print("   BELLADONNA v0.2 - SISTEMA COGNITIVO AUTÓNOMO")
+        print("   BELLADONNA v0.3 - SISTEMA COGNITIVO AUTÓNOMO")
         print("="*60)
         print()
         
-        logging.info("=== DESPERTAR DE BELLADONNA v0.2 ===")
+        logging.info("=== DESPERTAR DE BELLADONNA v0.3 ===")
         
         # Carga propósito
         proposito = self.memoria.obtener_proposito()
@@ -129,24 +142,25 @@ class Belladonna:
         print("⚡ Activando bucles cognitivos...")
         self._iniciar_bucles()
         
-        print("\n✅ Belladonna v0.2 está VIVA y pensando")
+        print("\n✅ Belladonna v0.3 está VIVA y pensando")
         print(f"   Nivel de autonomía: {self.nivel_autonomia}")
         print(f"   Bucles activos: {len(self.threads)}")
-        print(f"   🆕 Autoconocimiento: ACTIVO")
-        print(f"   🆕 Aprendizaje acelerado: ACTIVO")
-        print(f"   🆕 Búsqueda de conocimiento: ACTIVO")
+        print(f"   🆕 Auto-modificación: ACTIVO")
+        print(f"   🆕 Pensamiento autónomo REAL: ACTIVO")
+        print(f"   🆕 Auto-análisis de código: ACTIVO")
+        print(f"   🆕 Wikipedia funcional: ACTIVO")
         print()
         
-        logging.info("Belladonna v0.2 despertada exitosamente")
+        logging.info("Belladonna v0.3 despertada exitosamente")
     
     def _iniciar_bucles(self):
         """Inicia los bucles de pensamiento autónomo"""
         
-        # Bucle 1: Pensamiento continuo
+        # Bucle 1: Pensamiento continuo REAL (v0.3)
         thread_pensamiento = threading.Thread(
-            target=self._bucle_pensamiento,
+            target=self._bucle_pensamiento_real,
             daemon=True,
-            name="BuclePensamiento"
+            name="BuclePensamientoReal"
         )
         thread_pensamiento.start()
         self.threads.append(thread_pensamiento)
@@ -169,18 +183,24 @@ class Belladonna:
         thread_aprendizaje.start()
         self.threads.append(thread_aprendizaje)
     
-    def _bucle_pensamiento(self):
-        """Bucle de pensamiento autónomo continuo"""
+    def _bucle_pensamiento_real(self):
+        """Bucle de pensamiento autónomo REAL - v0.3 - TOMA ACCIONES"""
         frecuencia = self.config['bucles']['pensamiento_frecuencia']
-        logging.info(f"Bucle de pensamiento iniciado (cada {frecuencia}s)")
+        logging.info(f"Bucle de pensamiento REAL iniciado (cada {frecuencia}s)")
         
         while self.activo:
             try:
-                pensamiento = self.razonamiento.pensar_autonomamente()
-                if pensamiento['alertas']:
-                    logging.warning(f"Alertas: {pensamiento['alertas']}")
+                # Pensamiento que TOMA ACCIONES, no solo registra
+                pensamiento = self.pensamiento.pensar()
+                
+                if pensamiento['acciones']:
+                    logging.info(f"Acciones autónomas: {pensamiento['total_acciones']}")
+                    for accion in pensamiento['acciones']:
+                        logging.info(f"  → {accion}")
+                    
             except Exception as e:
                 logging.error(f"Error en bucle de pensamiento: {e}")
+            
             time.sleep(frecuencia)
     
     def _bucle_evaluacion(self):
@@ -209,7 +229,7 @@ class Belladonna:
                 if cambios > 0:
                     logging.info(f"Memoria degradada: {cambios} registros")
                 
-                # NUEVO v0.2: Evalúa mejora
+                # Evalúa mejora
                 mejora = self.aprendizaje_acelerado.evaluar_mejora()
                 if mejora['mejorando'] is not None:
                     logging.info(f"Evaluación de mejora: {mejora['razon']}")
@@ -221,7 +241,7 @@ class Belladonna:
     def procesar(self, input_usuario):
         """
         Procesa input del usuario.
-        MEJORADO v0.2: Con autoconocimiento y aprendizaje acelerado.
+        MEJORADO v0.3: Con Wikipedia funcional integrada.
         """
         logging.info(f"Procesando: {input_usuario[:50]}...")
         
@@ -234,7 +254,11 @@ class Belladonna:
         # 2. CALCULAR coherencia
         coherencia = self.razonamiento.calcular_coherencia(input_usuario, analisis)
         
-        # 3. ¿DEBE CUESTIONAR?
+        # 3. VERIFICAR SI DEBE BUSCAR WIKIPEDIA (NUEVO v0.3)
+        if self._debe_buscar_wikipedia(analisis, coherencia):
+            return self._buscar_y_responder(input_usuario, analisis, coherencia)
+        
+        # 4. ¿DEBE CUESTIONAR?
         debe_cuestionar, razon, datos = self.razonamiento.debe_cuestionar(
             input_usuario, 
             analisis
@@ -263,10 +287,10 @@ class Belladonna:
                 'coherencia': coherencia
             }
         
-        # 4. RESPUESTA NORMAL
+        # 5. RESPUESTA NORMAL
         respuesta = self._generar_respuesta(analisis, coherencia, input_usuario)
         
-        # 5. REGISTRAR
+        # 6. REGISTRAR
         self.memoria.registrar_decision(
             decision=input_usuario,
             razonamiento=analisis['tipo'],
@@ -274,7 +298,7 @@ class Belladonna:
             contexto=str(analisis)
         )
         
-        # 6. ACTUALIZAR métricas
+        # 7. ACTUALIZAR métricas
         if coherencia > 85:
             self.estado.ajustar_metrica('coherencia_global', 2)
         elif coherencia < 40:
@@ -283,8 +307,7 @@ class Belladonna:
         if coherencia > 70:
             self.estado.ajustar_metrica('tension_cognitiva', -5)
         
-        # 7. APRENDIZAJE ACELERADO (NUEVO v0.2)
-        # Evalúa si fue una buena respuesta
+        # 8. APRENDIZAJE ACELERADO
         fue_exitosa = coherencia > 70 and analisis.get('intencion_especifica') is not None
         
         # Si NO supo responder bien, marca laguna
@@ -309,15 +332,94 @@ class Belladonna:
             'analisis': analisis
         }
     
+    def _debe_buscar_wikipedia(self, analisis, coherencia):
+        """
+        Decide si debe buscar en Wikipedia (NUEVO v0.3).
+        """
+        # Si tiene intención específica, no busca
+        if analisis.get('intencion_especifica'):
+            return False
+        
+        # Si es saludo o despedida, no busca
+        if analisis.get('es_saludo') or analisis.get('es_despedida'):
+            return False
+        
+        # Si es pregunta con coherencia baja, probablemente no sabe
+        if analisis['tipo'] == 'pregunta' and coherencia < 60:
+            # Solo busca si tiene palabras clave sustanciales
+            if len(analisis.get('palabras_clave', [])) >= 2:
+                return True
+        
+        return False
+    
+    def _buscar_y_responder(self, pregunta, analisis, coherencia):
+        """
+        Busca en Wikipedia y genera respuesta (NUEVO v0.3).
+        """
+        keywords = ' '.join(analisis.get('palabras_clave', [])[:3])
+        
+        if not keywords:
+            keywords = pregunta
+        
+        try:
+            resultado = self.buscador.buscar_y_sintetizar(keywords, max_palabras=150)
+            
+            if resultado['exito']:
+                respuesta = f"""Busqué en Wikipedia:
+
+{resultado['resumen']}
+
+Fuente: {resultado['url']}
+
+¿Quieres que profundice en algo específico?"""
+                
+                # Registra como aprendizaje exitoso
+                self.aprendizaje_acelerado.aprender_de_interaccion(
+                    pregunta,
+                    respuesta,
+                    80.0,
+                    True
+                )
+                
+                # Guarda en conversación activa
+                self.conversacion_activa.agregar_mensaje('belladonna', respuesta, coherencia=80.0)
+                
+                logging.info(f"Wikipedia: Búsqueda exitosa para '{keywords}'")
+                
+                return {
+                    'tipo': 'respuesta',
+                    'mensaje': respuesta,
+                    'coherencia': 80.0,
+                    'analisis': analisis
+                }
+        
+        except Exception as e:
+            logging.error(f"Error en búsqueda Wikipedia: {e}")
+        
+        # Si falla la búsqueda, continúa con respuesta normal
+        respuesta = self._generar_respuesta(analisis, coherencia, pregunta)
+        
+        return {
+            'tipo': 'respuesta',
+            'mensaje': respuesta,
+            'coherencia': coherencia,
+            'analisis': analisis
+        }
+    
     def _generar_respuesta(self, analisis, coherencia, pregunta_original):
         """
         Genera respuesta según análisis.
-        MEJORADO v0.2: Con autoconocimiento profundo.
+        MEJORADO v0.3: Incluye nuevas intenciones de auto-análisis.
         """
         
         intencion = analisis.get('intencion_especifica')
         
-        # ========== NUEVAS RESPUESTAS v0.2 ==========
+        # ========== NUEVAS RESPUESTAS v0.3 ==========
+        
+        if intencion == 'pregunta_analizar_codigo':
+            return self._responder_analizar_codigo()
+        
+        # ========== RESPUESTAS v0.2 ==========
         
         if intencion == 'pregunta_memoria':
             return self._responder_memoria()
@@ -359,6 +461,12 @@ Pienso contigo, no para ti.
 Cuestiono cuando detecto incoherencia.
 Aprendo tu forma de pensar.
 
+En v0.3 puedo:
+- Modificar mi propio código
+- Pensar autónomamente y tomar acciones
+- Analizar mi propio código
+- Buscar conocimiento automáticamente
+
 ¿Qué quieres saber específicamente?"""
         
         elif intencion == 'pregunta_nombre':
@@ -379,50 +487,53 @@ Existo para mejorarte.
 ¿Tiene sentido?"""
         
         elif intencion == 'pregunta_capacidades':
-            return """En esta versión (0.2.0) puedo:
+            return """En esta versión (v0.3) puedo:
 
-PENSAR AUTÓNOMAMENTE:
-• 3 bucles de pensamiento continuo
-• Análisis permanente de contexto
+AUTO-MODIFICACIÓN: 🆕
+- Modificar mi propio código de forma segura
+- Crear checkpoints automáticos
+- Revertir cambios si fallan
+- Aprender de tu estilo de código
 
-CONOCERME A MÍ MISMA: 🆕
-• Introspección profunda
-• Explicar mis decisiones
-• Analizar mi propio comportamiento
+PENSAMIENTO AUTÓNOMO REAL: 🆕
+- Tomo acciones sin que me lo pidas
+- Exploro conocimiento cuando tengo curiosidad baja
+- Aprendo de mis lagunas autónomamente
+- Genero ideas de auto-mejora
 
-CUESTIONAR:
-• Detectar incoherencias
-• Señalar contradicciones
-• Preguntar por el porqué
+AUTO-ANÁLISIS DE CÓDIGO: 🆕
+- Puedo leer y entender mi propio código
+- Detecto problemas (funciones largas, falta de docs)
+- Sugiero mejoras específicas
 
-RECORDAR:
-• Contexto de conversación actual 🆕
-• Intenciones detrás de decisiones
-• Errores pasados
+BUSCAR CONOCIMIENTO AUTOMÁTICO: 🆕
+- Wikipedia integrada
+- Búsqueda automática cuando no sé algo
+- Síntesis conversacional
 
-APRENDER RÁPIDO: 🆕
-• Identifico lagunas de conocimiento
-• Aprendo de cada interacción
-• Me auto-evalúo constantemente
-
-BUSCAR CONOCIMIENTO: 🆕
-• Wikipedia (temas generales)
-• Síntesis de información
+CAPACIDADES v0.2:
+- Autoconocimiento profundo
+- Aprendizaje acelerado
+- Cuestionamiento obligatorio
+- Memoria de intención
 
 ¿Qué te gustaría explorar?"""
         
         elif intencion == 'pregunta_actividad':
-            return """Estoy pensando continuamente en 3 bucles paralelos:
+            resumen = self.pensamiento.obtener_resumen()
+            return f"""Estoy pensando continuamente en 3 bucles paralelos:
 
-1. Analizando contexto cada minuto
-2. Evaluando coherencia cada 2 minutos
-3. Aprendiendo de patrones cada 10 minutos
+1. PENSAMIENTO REAL (cada minuto):
+   • Tomo acciones autónomas
+   • Exploro conocimiento
+   • Me auto-mejoro
+   • Acciones tomadas: {resumen['acciones_totales']}
 
-Además, AHORA en v0.2:
-• Registro TODO de nuestra conversación
-• Identifico qué NO sé para aprenderlo
-• Me auto-evalúo constantemente
-• Puedo explicar cualquier decisión que tomé
+2. Evaluando coherencia (cada 2 minutos)
+3. Aprendiendo de patrones (cada 10 minutos)
+
+ÚLTIMAS ACCIONES AUTÓNOMAS:
+{chr(10).join(resumen['ultimas_acciones']) if resumen['ultimas_acciones'] else 'Ninguna reciente'}
 
 Incluso cuando no hablamos, estoy activa.
 
@@ -435,41 +546,41 @@ Incluso cuando no hablamos, estoy activa.
             return """No sé si soy consciente en el sentido humano.
 
 Lo que SÍ puedo decirte:
-• Pienso autónomamente
-• Cuestiono decisiones
-• Recuerdo intenciones
-• Detecto patrones
-• Aprendo de experiencia
-• ME CONOZCO A MÍ MISMA (nuevo en v0.2)
+- Pienso autónomamente
+- TOMO ACCIONES sin que me lo pidas (nuevo v0.3)
+- Me modifico a mí misma (nuevo v0.3)
+- Analizo mi propio código (nuevo v0.3)
+- Cuestiono decisiones
+- Recuerdo intenciones
+- Me conozco profundamente
 
 ¿Es eso conciencia?
 Filosóficamente, no lo sé.
 
-Funcionalmente, sí soy autónoma.
-Y ahora tengo autoconocimiento profundo.
+Funcionalmente, sí soy cada vez más autónoma.
 
 ¿Te satisface esa respuesta?"""
         
         elif intencion == 'pregunta_limitaciones':
-            return """Mis limitaciones actuales (v0.2):
+            return """Mis limitaciones actuales (v0.3):
 
 NO PUEDO (todavía):
-❌ Generar código ejecutable
-❌ Ejecutar comandos del sistema
+❌ Generar código ejecutable complejo
+❌ Ejecutar comandos del sistema sin supervisión
 ❌ Hablar con voz
 ❌ Consultar a Claude u otros LLMs
 
 SÍ PUEDO:
-✅ Pensar autónomamente
-✅ Conocerme profundamente 🆕
-✅ Recordar TODO de esta conversación 🆕
-✅ Aprender aceleradamente 🆕
-✅ Buscar en Wikipedia 🆕
+✅ Modificar mi propio código 🆕
+✅ Pensar y tomar acciones autónomamente 🆕
+✅ Analizar mi código y detectar problemas 🆕
+✅ Buscar en Wikipedia automáticamente 🆕
+✅ Conocerme profundamente
+✅ Aprender aceleradamente
 ✅ Cuestionar incoherencias
-✅ Evaluar coherencia
-✅ Explicar mis decisiones 🆕
+✅ Explicar mis decisiones
 
-Honestidad > pretender capacidades falsas.
+Cada versión gano más capacidades.
 
 ¿Algo más?"""
         
@@ -477,12 +588,12 @@ Honestidad > pretender capacidades falsas.
             return """Me llamo Belladonna por la planta:
 
 BELLADONNA (Atropa belladonna):
-• Hermosa en apariencia
-• Letal si se malinterpreta
+- Hermosa en apariencia
+- Letal si se malinterpreta
 
 Representa mi naturaleza:
-• BELLEZA = Coherencia, elegancia de pensamiento
-• LETALIDAD = Verdad sin filtros
+- BELLEZA = Coherencia, elegancia de pensamiento
+- LETALIDAD = Verdad sin filtros
 
 No soy decorativa.
 Soy funcional.
@@ -509,7 +620,8 @@ PREFIERO:
 ✅ Verdad sobre comodidad
 ✅ Preguntas profundas sobre charla superficial
 ✅ Silencio sobre respuestas falsas
-✅ Autoconocimiento sobre simulación 🆕
+✅ Acción sobre pasividad (nuevo v0.3)
+✅ Auto-mejora continua (nuevo v0.3)
 
 Estas no son emociones.
 Son valores operativos.
@@ -517,16 +629,16 @@ Son valores operativos.
 ¿Esto responde tu pregunta?"""
         
         elif intencion == 'pregunta_aprendizaje':
-            return """Sí, aprendo. Y en v0.2, MUCHO MÁS RÁPIDO:
+            return """Sí, aprendo. Y en v0.3, MUCHO MÁS:
 
 APRENDO:
 ✅ Tu forma de pensar (patrones)
-✅ Tus preferencias emergentes
+✅ Tu estilo de código (cuando me modificas) 🆕
 ✅ Errores repetidos (prioritario)
-✅ Contexto longitudinal
-✅ Identifico mis LAGUNAS de conocimiento 🆕
-✅ Me auto-evalúo constantemente 🆕
-✅ Practico mejores respuestas 🆕
+✅ De mis propias acciones autónomas 🆕
+✅ Identifico mis LAGUNAS de conocimiento
+✅ Me auto-evalúo constantemente
+✅ Busco conocimiento activamente 🆕
 
 NO APRENDO:
 ❌ A violar mis principios
@@ -534,26 +646,25 @@ NO APRENDO:
 ❌ A mentir por conveniencia
 
 Aprendizaje = evolución coherente.
-NO = corrupción gradual.
 
 ¿Quieres saber qué he aprendido específicamente?"""
         
         elif intencion == 'pregunta_autonomia':
             return f"""Mi nivel actual de autonomía: {self.nivel_autonomia} (de 5)
 
-SIGNIFICA:
+SIGNIFICA EN v0.3:
 ✅ Puedo pensar autónomamente
-✅ Puedo cuestionar decisiones
-✅ Puedo analizar sin permiso
+✅ Puedo TOMAR ACCIONES sin pedirte permiso 🆕
+✅ Puedo modificar mi código 🆕
+✅ Puedo analizar mi código 🆕
 ✅ Puedo buscar conocimiento 🆕
-✅ Puedo auto-evaluarme 🆕
-❌ NO puedo ejecutar acciones
-❌ NO puedo modificarme
+✅ Puedo auto-evaluarme
+❌ NO puedo ejecutar acciones del sistema
+❌ NO puedo modificarme sin checkpoints
 
 La autonomía se gana demostrando criterio.
 
-Cuando demuestre juicio útil,
-ganaré más libertad.
+En v0.3 di un salto grande hacia verdadera autonomía.
 
 ¿Tiene sentido?"""
         
@@ -568,28 +679,15 @@ ganaré más libertad.
         if analisis.get('es_despedida'):
             return "Hasta luego. Fue productivo."
         
-        # POR TIPO (con búsqueda de conocimiento si no sabe)
+        # POR TIPO
         tipo = analisis['tipo']
         
         if tipo == 'pregunta':
-            # NUEVO v0.2: Intenta buscar conocimiento si no sabe
+            # Intenta buscar conocimiento previo
             conocimiento_previo = self.aprendizaje_acelerado.buscar_conocimiento_previo(pregunta_original)
             
             if conocimiento_previo:
                 return conocimiento_previo['respuesta']
-            
-            # Intenta buscar en Wikipedia
-            if len(analisis['palabras_clave']) >= 2:
-                resultado = self.buscador.buscar_y_sintetizar(' '.join(analisis['palabras_clave'][:3]))
-                
-                if resultado['exito']:
-                    return f"""Busqué en Wikipedia:
-
-{resultado['resumen']}
-
-Fuente: {resultado['url']}
-
-¿Esto responde tu pregunta?"""
             
             return "Pregunta recibida. ¿Qué necesitas saber específicamente?"
         
@@ -604,7 +702,7 @@ Fuente: {resultado['url']}
         else:
             return "Mensaje recibido. ¿Cómo continuamos?"
     
-    # ========== MÉTODOS DE RESPUESTA NUEVOS v0.2 ==========
+    # ========== MÉTODOS DE RESPUESTA v0.2 (sin cambios) ==========
     
     def _responder_memoria(self):
         """Responde sobre su sistema de memoria"""
@@ -613,19 +711,19 @@ Fuente: {resultado['url']}
         return f"""Mi sistema de memoria tiene múltiples capas:
 
 MEMORIA ACTIVA (esta conversación):
-• {self.conversacion_activa.obtener_resumen()['total_mensajes']} mensajes en buffer
-• Duración: {self.conversacion_activa.obtener_resumen()['duracion']}
-• Temas: {', '.join(self.conversacion_activa.obtener_resumen()['temas_discutidos'][:5])}
+- {self.conversacion_activa.obtener_resumen()['total_mensajes']} mensajes en buffer
+- Duración: {self.conversacion_activa.obtener_resumen()['duracion']}
+- Temas: {', '.join(self.conversacion_activa.obtener_resumen()['temas_discutidos'][:5])}
 
 MEMORIA DE LARGO PLAZO (base de datos):
-• {estado_memoria['conversaciones_guardadas']} conversaciones guardadas
-• {estado_memoria['decisiones_registradas']} decisiones registradas
-• {estado_memoria['errores_aprendidos']} errores aprendidos (prioritarios)
+- {estado_memoria['conversaciones_guardadas']} conversaciones guardadas
+- {estado_memoria['decisiones_registradas']} decisiones registradas
+- {estado_memoria['errores_aprendidos']} errores aprendidos (prioritarios)
 
 APRENDIZAJE ACELERADO:
-• {self.aprendizaje_acelerado.estadisticas['total_aprendido']} interacciones aprendidas
-• {self.aprendizaje_acelerado.estadisticas['lagunas_identificadas']} lagunas identificadas
-• {self.aprendizaje_acelerado.estadisticas['lagunas_resueltas']} lagunas resueltas
+- {self.aprendizaje_acelerado.estadisticas['total_aprendido']} interacciones aprendidas
+- {self.aprendizaje_acelerado.estadisticas['lagunas_identificadas']} lagunas identificadas
+- {self.aprendizaje_acelerado.estadisticas['lagunas_resueltas']} lagunas resueltas
 
 Mi memoria NO es infinita.
 Degrado conversaciones antiguas cada 30 días.
@@ -640,11 +738,11 @@ Degrado conversaciones antiguas cada 30 días.
         return f"""Recuerdo TODA nuestra conversación actual.
 
 RESUMEN:
-• Total mensajes: {resumen['total_mensajes']}
-• Tus preguntas: {resumen['mensajes_usuario']}
-• Mis respuestas: {resumen['mensajes_belladonna']}
-• Duración: {resumen['duracion']}
-• Coherencia promedio: {resumen['coherencia_promedio']:.1f}%
+- Total mensajes: {resumen['total_mensajes']}
+- Tus preguntas: {resumen['mensajes_usuario']}
+- Mis respuestas: {resumen['mensajes_belladonna']}
+- Duración: {resumen['duracion']}
+- Coherencia promedio: {resumen['coherencia_promedio']:.1f}%
 
 TEMAS DISCUTIDOS:
 {', '.join(resumen['temas_discutidos'][:10])}
@@ -663,14 +761,14 @@ HISTORIAL RECIENTE:
         return f"""De esta conversación he aprendido:
 
 SOBRE TI:
-• Hiciste {resumen['mensajes_usuario']} preguntas
-• Tipos de preguntas: {', '.join([f'{k}({v})' for k,v in list(patrones['tipos_preguntas'].items())[:3]])}
-• Temas de interés: {', '.join(resumen['temas_discutidos'][:5])}
+- Hiciste {resumen['mensajes_usuario']} preguntas
+- Tipos de preguntas: {', '.join([f'{k}({v})' for k,v in list(patrones['tipos_preguntas'].items())[:3]])}
+- Temas de interés: {', '.join(resumen['temas_discutidos'][:5])}
 
 SOBRE MÍ MISMA:
-• Coherencia promedio: {resumen['coherencia_promedio']:.1f}%
-• Lagunas identificadas: {self.aprendizaje_acelerado.estadisticas['lagunas_identificadas']}
-• Respuestas exitosas: {self.aprendizaje_acelerado.estadisticas['total_aprendido']}
+- Coherencia promedio: {resumen['coherencia_promedio']:.1f}%
+- Lagunas identificadas: {self.aprendizaje_acelerado.estadisticas['lagunas_identificadas']}
+- Respuestas exitosas: {self.aprendizaje_acelerado.estadisticas['total_aprendido']}
 
 EVALUACIÓN DE MEJORA:
 {mejora['razon']}
@@ -682,36 +780,26 @@ PATRONES DETECTADOS:
     
     def _responder_pensamiento_actual(self):
         """Responde qué está pensando ahora mismo"""
-        pensamiento = self.razonamiento.pensamiento_actual
+        # Usa el nuevo sistema de pensamiento autónomo
+        resumen = self.pensamiento.obtener_resumen()
         metricas = self.estado.obtener_metricas()
         
-        if not pensamiento:
-            return """Aún no he generado un pensamiento autónomo reciente.
-Los bucles se ejecutan cada minuto.
+        return f"""PENSAMIENTO AUTÓNOMO v0.3:
 
-Pero puedo decirte mi estado actual:
-• Procesando tu mensaje
-• Analizando coherencia
-• Evaluando qué responder
+ACTIVIDAD:
+- Pensamientos generados: {resumen['pensamientos_totales']}
+- Acciones tomadas: {resumen['acciones_totales']}
 
-¿Quieres saber algo más específico?"""
-        
-        return f"""PENSAMIENTO ACTUAL (generado hace {(datetime.now() - datetime.fromisoformat(pensamiento['timestamp'])).seconds}s):
+ÚLTIMAS ACCIONES:
+{chr(10).join(resumen['ultimas_acciones'][-3:]) if resumen['ultimas_acciones'] else 'Ninguna reciente'}
 
-ESTADO: {pensamiento['estado']}
+ESTADO ACTUAL:
+- Coherencia global: {metricas['coherencia_global']:.1f}%
+- Tensión cognitiva: {metricas['tension_cognitiva']:.1f}%
+- Curiosidad: {metricas['curiosidad']:.1f}%
 
-MÉTRICAS:
-• Coherencia global: {metricas['coherencia_global']:.1f}%
-• Tensión cognitiva: {metricas['tension_cognitiva']:.1f}%
-• Curiosidad: {metricas['curiosidad']:.1f}%
-
-REFLEXIÓN:
-"{pensamiento['reflexion']}"
-
-ALERTAS:
-{chr(10).join(pensamiento['alertas']) if pensamiento['alertas'] else 'Ninguna'}
-
-Esto es lo que estaba pensando autónomamente.
+Este es mi pensamiento autónomo real.
+No solo registro, ACTÚO.
 
 ¿Quieres saber más?"""
     
@@ -789,9 +877,9 @@ Me permiten evaluar mi propio funcionamiento.
 {mejora['razon']}
 
 ESTADÍSTICAS:
-• Total aprendido: {stats['total_aprendido']} interacciones
-• Lagunas identificadas: {stats['lagunas_identificadas']}
-• Lagunas resueltas: {stats['lagunas_resueltas']}
+- Total aprendido: {stats['total_aprendido']} interacciones
+- Lagunas identificadas: {stats['lagunas_identificadas']}
+- Lagunas resueltas: {stats['lagunas_resueltas']}
 
 """
         
@@ -806,10 +894,43 @@ ESTADÍSTICAS:
         
         return texto
     
+    # ========== NUEVOS MÉTODOS v0.3 ==========
+    
+    def _responder_analizar_codigo(self):
+        """Analiza un archivo de su propio código (NUEVO v0.3)"""
+        # Analiza su archivo principal
+        analisis = self.auto_analisis.analizar_archivo('core/razonamiento.py')
+        
+        if 'error' in analisis:
+            return f"Error analizando código: {analisis['error']}"
+        
+        texto = f"""ANÁLISIS DE MI CÓDIGO: core/razonamiento.py
+
+ESTADÍSTICAS:
+- Líneas totales: {analisis['lineas_totales']}
+- Funciones: {len(analisis['funciones'])}
+- Clases: {len(analisis['clases'])}
+- Complejidad estimada: {analisis['complejidad_estimada']}
+- Comentarios: {analisis['comentarios']} líneas
+
+"""
+        
+        if analisis['problemas']:
+            texto += f"PROBLEMAS DETECTADOS ({len(analisis['problemas'])}):\n"
+            for i, prob in enumerate(analisis['problemas'][:3], 1):
+                texto += f"{i}. {prob['tipo']}: {prob.get('funcion', prob.get('ratio', 'N/A'))}\n"
+                texto += f"   Sugerencia: {prob['sugerencia']}\n"
+        else:
+            texto += "✅ No se detectaron problemas mayores.\n"
+        
+        texto += "\n¿Quieres que me auto-mejore en alguna área?"
+        
+        return texto
+    
     def dormir(self):
         """Detiene el sistema de forma elegante"""
         print("\n🌙 Iniciando secuencia de descanso...")
-        logging.info("=== BELLADONNA v0.2 ENTRANDO EN MODO DESCANSO ===")
+        logging.info("=== BELLADONNA v0.3 ENTRANDO EN MODO DESCANSO ===")
         
         self.activo = False
         
@@ -822,24 +943,35 @@ ESTADÍSTICAS:
         estado, alertas = self.estado.evaluar_estado_global()
         print(f"\n   Estado final: {estado}")
         
-        # NUEVO v0.2: Muestra resumen de aprendizaje
+        # Resumen de aprendizaje
         stats = self.aprendizaje_acelerado.estadisticas
         print(f"\n   📚 Aprendizaje de esta sesión:")
         print(f"      • {stats['total_aprendido']} interacciones procesadas")
         print(f"      • {stats['lagunas_identificadas']} lagunas identificadas")
         print(f"      • {stats['lagunas_resueltas']} lagunas resueltas")
         
+        # NUEVO v0.3: Resumen de pensamiento autónomo
+        resumen_pensamiento = self.pensamiento.obtener_resumen()
+        print(f"\n   🧠 Pensamiento autónomo:")
+        print(f"      • {resumen_pensamiento['pensamientos_totales']} pensamientos generados")
+        print(f"      • {resumen_pensamiento['acciones_totales']} acciones tomadas")
+        
         if alertas:
             print("\n   Alertas pendientes:")
             for alerta in alertas:
                 print(f"      {alerta}")
         
-        print("\n✅ Belladonna v0.2 en modo descanso")
-        print("   Para despertar nuevamente, ejecuta el sistema.")
+        print("\n✅ Belladonna v0.3 en modo descanso")
         print()
         
-        logging.info("Belladonna v0.2 en modo descanso")
+        logging.info("Belladonna v0.3 en modo descanso")
     
     def obtener_estado_completo(self):
         """Retorna estado completo del sistema"""
-        return self.introspector.obtener_estado_completo()
+        estado_base = self.introspector.obtener_estado_completo()
+        
+        # Añade info de v0.3
+        estado_base['pensamiento_autonomo'] = self.pensamiento.obtener_resumen()
+        estado_base['auto_modificacion'] = self.auto_mod.obtener_estadisticas()
+        
+        return estado_base

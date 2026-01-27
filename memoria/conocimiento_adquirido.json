@@ -1997,5 +1997,14 @@
       "exitosa": false,
       "timestamp": "2026-01-26T15:07:54.494400"
     }
+  ],
+  "estás_pensando_¿qué": [
+    {
+      "pregunta": "¿Qué estás pensando ahora mismo?",
+      "respuesta": "PENSAMIENTO AUTÓNOMO v0.3:\n\nACTIVIDAD:\n- Pensamientos generados: 1\n- Acciones tomadas: 0\n\nÚLTIMAS ACCIONES:\nNinguna reciente\n\nESTADO ACTUAL:\n- Coherencia global: 100.0%\n- Tensión cognitiva: 0.0%\n- Curiosidad: 50.0%\n\nEste es mi pensamiento autónomo real.\nNo solo registro, ACTÚO.\n\n¿Quieres saber más?",
+      "coherencia": 85.0,
+      "exitosa": true,
+      "timestamp": "2026-01-26T20:11:15.346829"
+    }
   ]
 }

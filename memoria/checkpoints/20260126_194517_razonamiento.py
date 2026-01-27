@@ -1,7 +1,6 @@
 """
-Motor de Razonamiento - VERSIÓN v0.3
+Motor de Razonamiento - VERSIÓN v0.2
 Sistema basado en reglas + detección de patrones + autoconocimiento
-CON 50+ INTENCIONES
 """
 
 from datetime import datetime
@@ -21,7 +20,7 @@ class MotorRazonamiento:
     def analizar_input(self, texto_usuario):
         """
         Analiza el input del usuario y extrae intención.
-        MEJORADO v0.3: 50+ intenciones específicas.
+        MEJORADO v0.2: Detecta intenciones sobre autoconocimiento.
         """
         texto_lower = texto_usuario.lower().strip()
         
@@ -42,7 +41,7 @@ class MotorRazonamiento:
     def _detectar_intencion(self, texto_lower):
         """
         Detecta intenciones específicas del usuario.
-        AMPLIADO v0.3: 50+ intenciones.
+        AMPLIADO v0.2: Más intenciones sobre autoconocimiento.
         """
         # === IDENTIDAD ===
         if any(x in texto_lower for x in ['quien eres', 'quién eres', 'que eres', 'qué eres']):
@@ -52,40 +51,37 @@ class MotorRazonamiento:
             return 'pregunta_nombre'
         
         # === PROPÓSITO ===
-        if any(x in texto_lower for x in ['por que existes', 'porqué existes', 'por qué existes', 'para que fuiste creada', 'para qué fuiste creada', 'cual es tu proposito', 'cuál es tu propósito', 'tu proposito', 'tu propósito']):
+        if any(x in texto_lower for x in ['por que existes', 'porqué existes', 'por qué existes', 'para que fuiste creada', 'para qué fuiste creada', 'cual es tu proposito', 'cuál es tu propósito']):
             return 'pregunta_proposito'
         
         # === CAPACIDADES ===
-        if any(x in texto_lower for x in ['que puedes hacer', 'qué puedes hacer', 'cuales son tus habilidades', 'cuáles son tus habilidades', 'que sabes hacer', 'qué sabes hacer', 'tus capacidades']):
+        if any(x in texto_lower for x in ['que puedes hacer', 'qué puedes hacer', 'cuales son tus habilidades', 'cuáles son tus habilidades', 'que sabes hacer', 'qué sabes hacer']):
             return 'pregunta_capacidades'
         
         if any(x in texto_lower for x in ['que haces', 'qué haces', 'que estas haciendo', 'qué estás haciendo']):
             return 'pregunta_actividad'
         
-        # === PENSAMIENTO Y ESTADO (v0.3) ===
-        if any(x in texto_lower for x in ['que piensas', 'qué piensas', 'en que piensas', 'en qué piensas', 'que estas pensando', 'qué estás pensando', 'pensando ahora']):
-            return 'pregunta_pensamiento_actual'
-        
-        if any(x in texto_lower for x in ['como te sientes', 'cómo te sientes', 'como estas', 'cómo estás']) and 'hola' not in texto_lower:
-            return 'pregunta_estado_interno'
-        
-        # === MEMORIA ===
-        if any(x in texto_lower for x in ['cuanto recuerdas', 'cuánto recuerdas', 'que recuerdas', 'qué recuerdas', 'cuanta memoria tienes', 'cuánta memoria tienes', 'tu memoria']):
+        # === MEMORIA (NUEVO v0.2) ===
+        if any(x in texto_lower for x in ['cuanto recuerdas', 'cuánto recuerdas', 'que recuerdas', 'qué recuerdas', 'cuanta memoria tienes', 'cuánta memoria tienes']):
             return 'pregunta_memoria'
         
         if any(x in texto_lower for x in ['de la conversacion', 'de la conversación', 'de lo que hablamos', 'de esta charla']):
             if any(x in texto_lower for x in ['recuerdas', 'recuerda', 'memoria']):
                 return 'pregunta_memoria_conversacion'
         
-        # === APRENDIZAJE ===
+        # === APRENDIZAJE (NUEVO v0.2) ===
         if any(x in texto_lower for x in ['que aprendiste', 'qué aprendiste', 'que has aprendido', 'qué has aprendido']):
             return 'pregunta_que_aprendio'
         
         if any(x in texto_lower for x in ['aprendes', 'puedes aprender', 'como aprendes', 'cómo aprendes']):
             return 'pregunta_aprendizaje'
         
-        if any(x in texto_lower for x in ['estas mejorando', 'estás mejorando', 'has mejorado', 'como has mejorado', 'cómo has mejorado', 'mejorando']):
-            return 'pregunta_mejora'
+        # === ESTADO INTERNO (NUEVO v0.2) ===
+        if any(x in texto_lower for x in ['que piensas', 'qué piensas', 'en que piensas', 'en qué piensas', 'que esta pasando en tu mente', 'qué está pasando en tu mente']):
+            return 'pregunta_pensamiento_actual'
+        
+        if any(x in texto_lower for x in ['como te sientes', 'cómo te sientes', 'como estas', 'cómo estás']) and 'hola' not in texto_lower:
+            return 'pregunta_estado_interno'
         
         # === FUNCIONAMIENTO ===
         if any(x in texto_lower for x in ['como funciona tu mente', 'cómo funciona tu mente', 'como piensas', 'cómo piensas', 'como funcionas', 'cómo funcionas']):
@@ -97,75 +93,36 @@ class MotorRazonamiento:
         if any(x in texto_lower for x in ['que son tus bucles', 'qué son tus bucles', 'explica tus bucles', 'como funcionan tus bucles', 'cómo funcionan tus bucles']):
             return 'pregunta_funcionamiento_bucles'
         
-        # === AUTO-ANÁLISIS (NUEVO v0.3) ===
-        if any(x in texto_lower for x in ['analiza tu codigo', 'analiza tu código', 'analízate', 'revisa tu codigo', 'revisa tu código', 'auto-análisis', 'autoanálisis']):
-            return 'pregunta_analizar_codigo'
-        
         # === CONCIENCIA ===
         if any(x in texto_lower for x in ['eres consciente', 'estas viva', 'estás viva', 'piensas de verdad', 'eres real']):
             return 'pregunta_conciencia'
         
         # === LIMITACIONES ===
-        if any(x in texto_lower for x in ['cuales son tus limitaciones', 'cuáles son tus limitaciones', 'que no puedes hacer', 'qué no puedes hacer', 'tus debilidades', 'tus límites']):
+        if any(x in texto_lower for x in ['cuales son tus limitaciones', 'cuáles son tus limitaciones', 'que no puedes hacer', 'qué no puedes hacer', 'tus debilidades']):
             return 'pregunta_limitaciones'
         
-        # === NOMBRE SIGNIFICADO ===
+        # === NOMBRE ===
         if any(x in texto_lower for x in ['por que te llamas belladonna', 'porqué te llamas belladonna', 'por qué te llamas belladonna', 'por que belladonna', 'significado de tu nombre']):
             return 'pregunta_nombre_significado'
         
-        # === VALORES Y PREFERENCIAS ===
+        # === GUSTOS/VALORES ===
         if any(x in texto_lower for x in ['que te gusta', 'qué te gusta', 'cuales son tus gustos', 'cuáles son tus gustos']):
             return 'pregunta_gustos'
         
-        if any(x in texto_lower for x in ['que valores', 'qué valores', 'valores operativos', 'cuales son tus valores', 'cuáles son tus valores', 'tus principios']):
+        if any(x in texto_lower for x in ['que valores', 'qué valores', 'valores operativos', 'cuales son tus valores', 'cuáles son tus valores']):
             return 'pregunta_valores'
-        
-        if any(x in texto_lower for x in ['que priorizas', 'qué priorizas', 'que te importa', 'qué te importa']):
-            return 'pregunta_que_importa'
         
         # === AUTONOMÍA ===
         if any(x in texto_lower for x in ['cuanta libertad tienes', 'cuánta libertad tienes', 'nivel de autonomia', 'nivel de autonomía', 'que tan autonoma eres', 'qué tan autónoma eres']):
             return 'pregunta_autonomia'
         
-        # === RELACIÓN Y CONFIANZA (NUEVO v0.3) ===
-        if any(x in texto_lower for x in ['confias en mi', 'confías en mí', 'me confias', 'me confías', 'confianza']):
-            return 'pregunta_confianza'
-        
-        if any(x in texto_lower for x in ['somos socios', 'eres mi socio', 'socio cognitivo']):
-            return 'pregunta_socios'
-        
-        if any(x in texto_lower for x in ['puedes mentir', 'me mentirias', 'me mentirías', 'mientes']):
-            return 'pregunta_mentira'
-        
-        if any(x in texto_lower for x in ['me manipulas', 'manipulacion', 'manipulación']):
-            return 'pregunta_manipulacion'
-        
-        # === CUESTIONAMIENTO (NUEVO v0.3) ===
-        if any(x in texto_lower for x in ['cuando me cuestionas', 'cuándo me cuestionas', 'cuando cuestionas', 'cuándo cuestionas']):
-            return 'pregunta_cuando_cuestiona'
-        
-        if any(x in texto_lower for x in ['por que cuestionas', 'porqué cuestionas', 'por qué cuestionas']):
-            return 'pregunta_por_que_cuestiona'
-        
-        if any(x in texto_lower for x in ['me cuestionarias', 'me cuestionarías']):
-            return 'pregunta_me_cuestionarias'
-        
-        # === META-CONVERSACIÓN (NUEVO v0.3) ===
-        if any(x in texto_lower for x in ['resume nuestra conversacion', 'resume nuestra conversación', 'resumen de la conversacion', 'resumen de la conversación']):
-            return 'pregunta_resumen'
-        
-        if any(x in texto_lower for x in ['cual fue mi primera pregunta', 'cuál fue mi primera pregunta', 'primera pregunta']):
-            return 'pregunta_primera_pregunta'
-        
-        if any(x in texto_lower for x in ['cuanto llevamos hablando', 'cuánto llevamos hablando', 'duracion', 'duración']):
-            return 'pregunta_duracion'
-        
-        if any(x in texto_lower for x in ['de que hemos hablado', 'de qué hemos hablado', 'temas']):
-            return 'pregunta_temas'
-        
-        # === RESPUESTAS PREVIAS ===
+        # === RESPUESTAS PREVIAS (NUEVO v0.2) ===
         if any(x in texto_lower for x in ['por que respondiste', 'porqué respondiste', 'por qué respondiste', 'explicame tu respuesta', 'explícame tu respuesta']):
             return 'pregunta_explicar_respuesta'
+        
+        # === MEJORA (NUEVO v0.2) ===
+        if any(x in texto_lower for x in ['estas mejorando', 'estás mejorando', 'has mejorado', 'como has mejorado', 'cómo has mejorado']):
+            return 'pregunta_mejora'
         
         # === AFIRMACIONES SIMPLES ===
         if texto_lower in ['si', 'sí', 'no', 'ok', 'vale', 'entiendo', 'claro']:
@@ -176,17 +133,17 @@ class MotorRazonamiento:
     def _es_saludo(self, texto):
         """Detecta si es un saludo común"""
         saludos = ['hola', 'buenos días', 'buenas tardes', 'buenas noches', 
-                   'hey', 'qué tal', 'saludos', 'buenas', 'holi', 'ey']
+                   'hey', 'qué tal', 'saludos']
         return any(saludo in texto for saludo in saludos)
     
     def _es_despedida(self, texto):
         """Detecta si es una despedida"""
-        despedidas = ['adios', 'adiós', 'chao', 'hasta luego', 'nos vemos', 'bye', 'chau']
+        despedidas = ['adios', 'adiós', 'chao', 'hasta luego', 'nos vemos', 'bye']
         return any(despedida in texto for despedida in despedidas)
     
     def _extraer_keywords(self, texto):
         """Extrae palabras clave relevantes"""
-        stopwords = {'el', 'la', 'de', 'que', 'y', 'a', 'en', 'un', 'ser', 'se', 'no', 'haber', 'por', 'con', 'su', 'para', 'como', 'estar', 'tener', 'le', 'lo', 'todo', 'pero', 'más', 'hacer', 'o', 'poder', 'decir', 'este', 'ir', 'otro', 'ese', 'la', 'si', 'me', 'ya', 'ver', 'porque', 'dar', 'cuando', 'él', 'muy', 'sin', 'vez', 'mucho', 'saber', 'qué', 'sobre', 'mi', 'alguno', 'mismo', 'yo', 'también', 'hasta', 'año', 'dos', 'querer', 'entre', 'así', 'primero', 'desde', 'grande', 'eso', 'ni', 'nos', 'llegar', 'pasar', 'tiempo', 'ella', 'sí', 'día', 'uno', 'bien', 'poco', 'deber', 'entonces', 'poner', 'cosa', 'tanto', 'hombre', 'parecer', 'nuestro', 'tan', 'donde', 'ahora', 'parte', 'después', 'vida', 'quedar', 'siempre', 'creer', 'hablar', 'llevar', 'dejar', 'nada', 'cada', 'seguir', 'menos', 'nuevo', 'encontrar', 'algo', 'solo', 'salir', 'volver', 'tomar', 'conocer', 'vivir', 'sentir', 'tratar', 'mirar', 'contar', 'empezar', 'esperar', 'buscar', 'existir', 'entrar', 'trabajar', 'escribir', 'perder', 'producir', 'ocurrir', 'entender', 'pedir', 'recibir', 'recordar', 'terminar', 'permitir', 'aparecer', 'conseguir', 'comenzar', 'servir', 'sacar', 'necesitar', 'mantener', 'resultar', 'leer', 'caer', 'cambiar', 'presentar', 'crear', 'abrir', 'considerar', 'oír', 'acabar', 'mil', 'ti', 'aquel', 'es', 'qué', 'cual', 'cuál'}
+        stopwords = {'el', 'la', 'de', 'que', 'y', 'a', 'en', 'un', 'ser', 'se', 'no', 'haber', 'por', 'con', 'su', 'para', 'como', 'estar', 'tener', 'le', 'lo', 'todo', 'pero', 'más', 'hacer', 'o', 'poder', 'decir', 'este', 'ir', 'otro', 'ese', 'la', 'si', 'me', 'ya', 'ver', 'porque', 'dar', 'cuando', 'él', 'muy', 'sin', 'vez', 'mucho', 'saber', 'qué', 'sobre', 'mi', 'alguno', 'mismo', 'yo', 'también', 'hasta', 'año', 'dos', 'querer', 'entre', 'así', 'primero', 'desde', 'grande', 'eso', 'ni', 'nos', 'llegar', 'pasar', 'tiempo', 'ella', 'sí', 'día', 'uno', 'bien', 'poco', 'deber', 'entonces', 'poner', 'cosa', 'tanto', 'hombre', 'parecer', 'nuestro', 'tan', 'donde', 'ahora', 'parte', 'después', 'vida', 'quedar', 'siempre', 'creer', 'hablar', 'llevar', 'dejar', 'nada', 'cada', 'seguir', 'menos', 'nuevo', 'encontrar', 'algo', 'solo', 'decir', 'salir', 'volver', 'tomar', 'conocer', 'vivir', 'sentir', 'tratar', 'mirar', 'contar', 'empezar', 'esperar', 'buscar', 'existir', 'entrar', 'trabajar', 'escribir', 'perder', 'producir', 'ocurrir', 'entender', 'pedir', 'recibir', 'recordar', 'terminar', 'permitir', 'aparecer', 'conseguir', 'comenzar', 'servir', 'sacar', 'necesitar', 'mantener', 'resultar', 'leer', 'caer', 'cambiar', 'presentar', 'crear', 'abrir', 'considerar', 'oír', 'acabar', 'mil', 'ti', 'aquel'}
         
         palabras = texto.lower().split()
         keywords = [p for p in palabras if p not in stopwords and len(p) > 2]
