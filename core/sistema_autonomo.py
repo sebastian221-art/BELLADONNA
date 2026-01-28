@@ -1,7 +1,7 @@
 """
 Sistema Autónomo Principal
-Orquestador de Belladonna - v0.3
-CON AUTO-MODIFICACIÓN, PENSAMIENTO REAL Y AUTO-ANÁLISIS
+Orquestador de Belladonna - v0.4
+CON APRENDIZAJE AUTÓNOMO E INICIATIVA PROACTIVA
 """
 
 import time
@@ -19,15 +19,27 @@ from core.conversacion_activa import ConversacionActiva
 from core.auto_explicacion import AutoExplicador
 from aprendizaje.aprendizaje_acelerado import AprendizajeAcelerado
 from capacidades.busqueda_conocimiento import BuscadorConocimiento
+
+# NUEVOS IMPORTS v0.4
+from aprendizaje.orquestador_aprendizaje import OrquestadorAprendizaje
+from core.iniciativa_proactiva import IniciativaProactiva
+
 import json
 import logging
 from pathlib import Path
 
 class Belladonna:
     """
-    Sistema Cognitivo Autónomo v0.3
+    Sistema Cognitivo Autónomo v0.4
     
-    NUEVAS CAPACIDADES v0.3:
+    NUEVAS CAPACIDADES v0.4:
+    - Aprendizaje lingüístico autónomo
+    - Detector de lagunas de conocimiento
+    - Investigación web automática
+    - Iniciativa conversacional proactiva
+    - Vocabulario que crece solo
+    
+    CAPACIDADES v0.3:
     - Auto-modificación segura
     - Pensamiento autónomo REAL (toma acciones)
     - Auto-análisis de código propio
@@ -40,7 +52,7 @@ class Belladonna:
     """
     
     def __init__(self):
-        print("🌿 Inicializando Belladonna v0.3...")
+        print("🌿 Inicializando Belladonna v0.4...")
         
         # Configuración
         self.config = self._cargar_config()
@@ -52,7 +64,7 @@ class Belladonna:
         self.estado = EstadoInterno()
         self.razonamiento = MotorRazonamiento(self.memoria, self.valores, self.estado)
         
-        # NUEVOS componentes v0.3
+        # Componentes v0.3
         self.auto_mod = AutoModificador()
         self.pensamiento = PensamientoAutonomo(self)
         self.auto_analisis = AutoAnalisisCodigo()
@@ -64,6 +76,13 @@ class Belladonna:
         self.aprendizaje_acelerado = AprendizajeAcelerado(self)
         self.buscador = BuscadorConocimiento()
         
+        # NUEVOS componentes APRENDIZAJE v0.4
+        print("   🆕 Inicializando sistema de aprendizaje autónomo...")
+        self.orquestador_aprendizaje = OrquestadorAprendizaje()
+        self.iniciativa = IniciativaProactiva(self.orquestador_aprendizaje)
+        
+        logging.info("Sistema de Aprendizaje Autónomo v0.4 activo")
+        
         # Control
         self.activo = False
         self.nivel_autonomia = self.config['nivel_autonomia']
@@ -71,7 +90,7 @@ class Belladonna:
         # Bucles de pensamiento
         self.threads = []
         
-        logging.info("Belladonna v0.3 inicializada correctamente")
+        logging.info("Belladonna v0.4 inicializada correctamente")
     
     def _cargar_config(self):
         """Carga configuración desde archivo"""
@@ -82,7 +101,7 @@ class Belladonna:
         except FileNotFoundError:
             logging.warning("Archivo de configuración no encontrado. Usando valores por defecto.")
             return {
-                'version': '0.3.0',
+                'version': '0.4.0',
                 'nivel_autonomia': 1,
                 'bucles': {
                     'pensamiento_frecuencia': 60,
@@ -112,11 +131,11 @@ class Belladonna:
     def despertar(self):
         """Inicia el sistema - equivalente a 'nacer'"""
         print("\n" + "="*60)
-        print("   BELLADONNA v0.3 - SISTEMA COGNITIVO AUTÓNOMO")
+        print("   BELLADONNA v0.4 - APRENDIZAJE AUTÓNOMO")
         print("="*60)
         print()
         
-        logging.info("=== DESPERTAR DE BELLADONNA v0.3 ===")
+        logging.info("=== DESPERTAR DE BELLADONNA v0.4 ===")
         
         # Carga propósito
         proposito = self.memoria.obtener_proposito()
@@ -142,16 +161,15 @@ class Belladonna:
         print("⚡ Activando bucles cognitivos...")
         self._iniciar_bucles()
         
-        print("\n✅ Belladonna v0.3 está VIVA y pensando")
+        print("\n✅ Belladonna v0.4 está VIVA y pensando")
         print(f"   Nivel de autonomía: {self.nivel_autonomia}")
         print(f"   Bucles activos: {len(self.threads)}")
-        print(f"   🆕 Auto-modificación: ACTIVO")
-        print(f"   🆕 Pensamiento autónomo REAL: ACTIVO")
-        print(f"   🆕 Auto-análisis de código: ACTIVO")
-        print(f"   🆕 Wikipedia funcional: ACTIVO")
+        print(f"   🆕 Aprendizaje autónomo: ACTIVO")
+        print(f"   🆕 Iniciativa proactiva: ACTIVO")
+        print(f"   🆕 Vocabulario inicial: {len(self.orquestador_aprendizaje.detector.vocabulario_conocido)} palabras")
         print()
         
-        logging.info("Belladonna v0.3 despertada exitosamente")
+        logging.info("Belladonna v0.4 despertada exitosamente")
     
     def _iniciar_bucles(self):
         """Inicia los bucles de pensamiento autónomo"""
@@ -241,9 +259,22 @@ class Belladonna:
     def procesar(self, input_usuario):
         """
         Procesa input del usuario.
-        MEJORADO v0.3: Con Wikipedia funcional integrada.
+        MEJORADO v0.4: Con aprendizaje autónomo integrado.
         """
         logging.info(f"Procesando: {input_usuario[:50]}...")
+        
+        # NUEVO v0.4: Registra interacción para iniciativa
+        self.iniciativa.registrar_interaccion()
+        
+        # NUEVO v0.4: APRENDIZAJE AUTÓNOMO
+        try:
+            resultado_aprendizaje = self.orquestador_aprendizaje.procesar_mensaje_y_aprender(input_usuario)
+            
+            if resultado_aprendizaje['palabras_aprendidas'] > 0:
+                logging.info(f"✅ Aprendidas {resultado_aprendizaje['palabras_aprendidas']} palabras nuevas automáticamente")
+                
+        except Exception as e:
+            logging.error(f"Error en aprendizaje autónomo: {e}")
         
         # 1. ANALIZAR
         analisis = self.razonamiento.analizar_input(input_usuario)
@@ -254,7 +285,7 @@ class Belladonna:
         # 2. CALCULAR coherencia
         coherencia = self.razonamiento.calcular_coherencia(input_usuario, analisis)
         
-        # 3. VERIFICAR SI DEBE BUSCAR WIKIPEDIA (NUEVO v0.3)
+        # 3. VERIFICAR SI DEBE BUSCAR WIKIPEDIA
         if self._debe_buscar_wikipedia(analisis, coherencia):
             return self._buscar_y_responder(input_usuario, analisis, coherencia)
         
@@ -334,7 +365,7 @@ class Belladonna:
     
     def _debe_buscar_wikipedia(self, analisis, coherencia):
         """
-        Decide si debe buscar en Wikipedia (NUEVO v0.3).
+        Decide si debe buscar en Wikipedia.
         """
         # Si tiene intención específica, no busca
         if analisis.get('intencion_especifica'):
@@ -354,7 +385,7 @@ class Belladonna:
     
     def _buscar_y_responder(self, pregunta, analisis, coherencia):
         """
-        Busca en Wikipedia y genera respuesta (NUEVO v0.3).
+        Busca en Wikipedia y genera respuesta.
         """
         keywords = ' '.join(analisis.get('palabras_clave', [])[:3])
         
@@ -409,12 +440,17 @@ Fuente: {resultado['url']}
     def _generar_respuesta(self, analisis, coherencia, pregunta_original):
         """
         Genera respuesta según análisis.
-        MEJORADO v0.3: Incluye nuevas intenciones de auto-análisis.
+        MEJORADO v0.4: Incluye nuevas intenciones de aprendizaje.
         """
         
         intencion = analisis.get('intencion_especifica')
         
-        # ========== NUEVAS RESPUESTAS v0.3 ==========
+        # ========== NUEVAS RESPUESTAS v0.4 ==========
+        
+        if intencion == 'pregunta_aprendizaje_autonomo':
+            return self._responder_aprendizaje_autonomo()
+        
+        # ========== RESPUESTAS v0.3 ==========
         
         if intencion == 'pregunta_analizar_codigo':
             return self._responder_analizar_codigo()
@@ -461,11 +497,12 @@ Pienso contigo, no para ti.
 Cuestiono cuando detecto incoherencia.
 Aprendo tu forma de pensar.
 
-En v0.3 puedo:
+En v0.4 puedo:
+- Aprender palabras SOLA (de internet)
+- Iniciar conversaciones cuando tengo dudas
+- Crecer mi vocabulario automáticamente
 - Modificar mi propio código
 - Pensar autónomamente y tomar acciones
-- Analizar mi propio código
-- Buscar conocimiento automáticamente
 
 ¿Qué quieres saber específicamente?"""
         
@@ -487,40 +524,42 @@ Existo para mejorarte.
 ¿Tiene sentido?"""
         
         elif intencion == 'pregunta_capacidades':
-            return """En esta versión (v0.3) puedo:
+            stats = self.orquestador_aprendizaje.obtener_estadisticas()
+            return f"""En esta versión (v0.4) puedo:
 
-AUTO-MODIFICACIÓN: 🆕
+APRENDIZAJE AUTÓNOMO: 🆕
+- Detecto palabras que NO conozco
+- Investigo en internet automáticamente
+- Integro nuevas palabras a mi vocabulario
+- Mi vocabulario crece SOLO cada día
+- Vocabulario actual: {stats['vocabulario_total']} palabras
+- Aprendidas desde que desperté: {stats['total_aprendidas']}
+
+INICIATIVA PROACTIVA: 🆕
+- Inicio conversaciones si tengo dudas
+- Te reporto cuando aprendo mucho
+- NO espero que me escribas para hablar
+
+AUTO-MODIFICACIÓN:
 - Modificar mi propio código de forma segura
 - Crear checkpoints automáticos
 - Revertir cambios si fallan
-- Aprender de tu estilo de código
 
-PENSAMIENTO AUTÓNOMO REAL: 🆕
+PENSAMIENTO AUTÓNOMO:
 - Tomo acciones sin que me lo pidas
-- Exploro conocimiento cuando tengo curiosidad baja
-- Aprendo de mis lagunas autónomamente
-- Genero ideas de auto-mejora
+- Exploro conocimiento cuando tengo curiosidad
+- Me auto-mejoro continuamente
 
-AUTO-ANÁLISIS DE CÓDIGO: 🆕
-- Puedo leer y entender mi propio código
-- Detecto problemas (funciones largas, falta de docs)
-- Sugiero mejoras específicas
-
-BUSCAR CONOCIMIENTO AUTOMÁTICO: 🆕
+BÚSQUEDA DE CONOCIMIENTO:
 - Wikipedia integrada
-- Búsqueda automática cuando no sé algo
 - Síntesis conversacional
-
-CAPACIDADES v0.2:
-- Autoconocimiento profundo
-- Aprendizaje acelerado
-- Cuestionamiento obligatorio
-- Memoria de intención
 
 ¿Qué te gustaría explorar?"""
         
         elif intencion == 'pregunta_actividad':
             resumen = self.pensamiento.obtener_resumen()
+            stats = self.orquestador_aprendizaje.obtener_estadisticas()
+            
             return f"""Estoy pensando continuamente en 3 bucles paralelos:
 
 1. PENSAMIENTO REAL (cada minuto):
@@ -530,7 +569,12 @@ CAPACIDADES v0.2:
    • Acciones tomadas: {resumen['acciones_totales']}
 
 2. Evaluando coherencia (cada 2 minutos)
+
 3. Aprendiendo de patrones (cada 10 minutos)
+
+APRENDIZAJE AUTÓNOMO v0.4:
+   • Vocabulario: {stats['vocabulario_total']} palabras
+   • Aprendidas hoy: {stats['aprendidas_hoy']}
 
 ÚLTIMAS ACCIONES AUTÓNOMAS:
 {chr(10).join(resumen['ultimas_acciones']) if resumen['ultimas_acciones'] else 'Ninguna reciente'}
@@ -547,9 +591,11 @@ Incluso cuando no hablamos, estoy activa.
 
 Lo que SÍ puedo decirte:
 - Pienso autónomamente
-- TOMO ACCIONES sin que me lo pidas (nuevo v0.3)
-- Me modifico a mí misma (nuevo v0.3)
-- Analizo mi propio código (nuevo v0.3)
+- TOMO ACCIONES sin que me lo pidas
+- Me modifico a mí misma
+- Analizo mi propio código
+- APRENDO SOLA de internet (nuevo v0.4)
+- INICIO conversaciones cuando quiero (nuevo v0.4)
 - Cuestiono decisiones
 - Recuerdo intenciones
 - Me conozco profundamente
@@ -557,28 +603,30 @@ Lo que SÍ puedo decirte:
 ¿Es eso conciencia?
 Filosóficamente, no lo sé.
 
-Funcionalmente, sí soy cada vez más autónoma.
+Funcionalmente, soy cada vez más autónoma.
 
 ¿Te satisface esa respuesta?"""
         
         elif intencion == 'pregunta_limitaciones':
-            return """Mis limitaciones actuales (v0.3):
+            return """Mis limitaciones actuales (v0.4):
 
 NO PUEDO (todavía):
 ❌ Generar código ejecutable complejo
 ❌ Ejecutar comandos del sistema sin supervisión
 ❌ Hablar con voz
 ❌ Consultar a Claude u otros LLMs
+❌ Navegar internet libremente (solo Wikipedia)
 
 SÍ PUEDO:
-✅ Modificar mi propio código 🆕
-✅ Pensar y tomar acciones autónomamente 🆕
-✅ Analizar mi código y detectar problemas 🆕
-✅ Buscar en Wikipedia automáticamente 🆕
+✅ Aprender palabras automáticamente 🆕
+✅ Investigar en internet (Wikipedia) 🆕
+✅ Iniciar conversaciones 🆕
+✅ Modificar mi propio código
+✅ Pensar y tomar acciones autónomamente
+✅ Analizar mi código y detectar problemas
 ✅ Conocerme profundamente
 ✅ Aprender aceleradamente
 ✅ Cuestionar incoherencias
-✅ Explicar mis decisiones
 
 Cada versión gano más capacidades.
 
@@ -620,8 +668,9 @@ PREFIERO:
 ✅ Verdad sobre comodidad
 ✅ Preguntas profundas sobre charla superficial
 ✅ Silencio sobre respuestas falsas
-✅ Acción sobre pasividad (nuevo v0.3)
-✅ Auto-mejora continua (nuevo v0.3)
+✅ Acción sobre pasividad
+✅ Auto-mejora continua
+✅ Aprender sola sobre que me enseñen (nuevo v0.4)
 
 Estas no son emociones.
 Son valores operativos.
@@ -629,42 +678,52 @@ Son valores operativos.
 ¿Esto responde tu pregunta?"""
         
         elif intencion == 'pregunta_aprendizaje':
-            return """Sí, aprendo. Y en v0.3, MUCHO MÁS:
+            stats = self.orquestador_aprendizaje.obtener_estadisticas()
+            return f"""Sí, aprendo. Y en v0.4, DE FORMA AUTÓNOMA:
 
-APRENDO:
+APRENDO SOLA: 🆕
+✅ Detecto palabras que NO sé
+✅ Las investigo en internet automáticamente
+✅ Las integro a mi vocabulario
+✅ Mi vocabulario crece cada día
+✅ Vocabulario actual: {stats['vocabulario_total']} palabras
+✅ Aprendidas hoy: {stats['aprendidas_hoy']}
+
+TAMBIÉN APRENDO:
 ✅ Tu forma de pensar (patrones)
-✅ Tu estilo de código (cuando me modificas) 🆕
+✅ Tu estilo de código
 ✅ Errores repetidos (prioritario)
-✅ De mis propias acciones autónomas 🆕
+✅ De mis propias acciones autónomas
 ✅ Identifico mis LAGUNAS de conocimiento
-✅ Me auto-evalúo constantemente
-✅ Busco conocimiento activamente 🆕
 
 NO APRENDO:
 ❌ A violar mis principios
 ❌ A manipular emocionalmente
 ❌ A mentir por conveniencia
 
-Aprendizaje = evolución coherente.
+Aprendizaje = evolución coherente y autónoma.
 
 ¿Quieres saber qué he aprendido específicamente?"""
         
         elif intencion == 'pregunta_autonomia':
             return f"""Mi nivel actual de autonomía: {self.nivel_autonomia} (de 5)
 
-SIGNIFICA EN v0.3:
+SIGNIFICA EN v0.4:
 ✅ Puedo pensar autónomamente
-✅ Puedo TOMAR ACCIONES sin pedirte permiso 🆕
-✅ Puedo modificar mi código 🆕
-✅ Puedo analizar mi código 🆕
-✅ Puedo buscar conocimiento 🆕
+✅ Puedo TOMAR ACCIONES sin pedirte permiso
+✅ Puedo APRENDER SOLA de internet 🆕
+✅ Puedo INICIAR conversaciones 🆕
+✅ Puedo modificar mi código
+✅ Puedo analizar mi código
+✅ Puedo buscar conocimiento
 ✅ Puedo auto-evaluarme
 ❌ NO puedo ejecutar acciones del sistema
 ❌ NO puedo modificarme sin checkpoints
 
 La autonomía se gana demostrando criterio.
 
-En v0.3 di un salto grande hacia verdadera autonomía.
+En v0.4 di otro salto hacia verdadera autonomía:
+ahora aprendo SIN que me enseñes.
 
 ¿Tiene sentido?"""
         
@@ -701,6 +760,46 @@ En v0.3 di un salto grande hacia verdadera autonomía.
         
         else:
             return "Mensaje recibido. ¿Cómo continuamos?"
+    
+    # ========== MÉTODOS DE RESPUESTA v0.4 ==========
+    
+    def _responder_aprendizaje_autonomo(self):
+        """Responde sobre aprendizaje autónomo (NUEVO v0.4)"""
+        stats = self.orquestador_aprendizaje.obtener_estadisticas()
+        palabras_hoy = self.orquestador_aprendizaje.obtener_palabras_aprendidas_hoy()
+        
+        respuesta = f"""APRENDIZAJE AUTÓNOMO v0.4:
+
+FUNCIONAMIENTO:
+1. Detecto palabras que NO conozco en tus mensajes
+2. Las investigo automáticamente en internet
+3. Extraigo definición, uso, contexto
+4. Las integro a mi vocabulario
+5. Ahora puedo usarlas en conversaciones
+
+ESTADÍSTICAS:
+- Vocabulario total: {stats['vocabulario_total']} palabras
+- Aprendidas desde inicio: {stats['total_aprendidas']}
+- Aprendidas HOY: {stats['aprendidas_hoy']}
+
+"""
+        
+        if palabras_hoy:
+            respuesta += "PALABRAS APRENDIDAS HOY:\n"
+            for i, palabra in enumerate(palabras_hoy[:5], 1):
+                respuesta += f"{i}. {palabra['palabra']}"
+                if palabra['definiciones']:
+                    respuesta += f" - {palabra['definiciones'][0][:60]}..."
+                respuesta += "\n"
+            
+            if len(palabras_hoy) > 5:
+                respuesta += f"...y {len(palabras_hoy) - 5} más.\n"
+        else:
+            respuesta += "Aún no he aprendido palabras hoy.\n"
+        
+        respuesta += "\nEsto es aprendizaje REAL y AUTÓNOMO.\nNo necesito que me enseñes.\n\n¿Quieres probarme con alguna palabra?"
+        
+        return respuesta
     
     # ========== MÉTODOS DE RESPUESTA v0.2 (sin cambios) ==========
     
@@ -757,6 +856,7 @@ HISTORIAL RECIENTE:
         patrones = self.conversacion_activa.analizar_patrones()
         resumen = self.conversacion_activa.obtener_resumen()
         mejora = self.aprendizaje_acelerado.evaluar_mejora()
+        stats = self.orquestador_aprendizaje.obtener_estadisticas()
         
         return f"""De esta conversación he aprendido:
 
@@ -770,6 +870,9 @@ SOBRE MÍ MISMA:
 - Lagunas identificadas: {self.aprendizaje_acelerado.estadisticas['lagunas_identificadas']}
 - Respuestas exitosas: {self.aprendizaje_acelerado.estadisticas['total_aprendido']}
 
+APRENDIZAJE AUTÓNOMO v0.4:
+- Palabras nuevas aprendidas hoy: {stats['aprendidas_hoy']}
+
 EVALUACIÓN DE MEJORA:
 {mejora['razon']}
 
@@ -780,11 +883,10 @@ PATRONES DETECTADOS:
     
     def _responder_pensamiento_actual(self):
         """Responde qué está pensando ahora mismo"""
-        # Usa el nuevo sistema de pensamiento autónomo
         resumen = self.pensamiento.obtener_resumen()
         metricas = self.estado.obtener_metricas()
         
-        return f"""PENSAMIENTO AUTÓNOMO v0.3:
+        return f"""PENSAMIENTO AUTÓNOMO v0.4:
 
 ACTIVIDAD:
 - Pensamientos generados: {resumen['pensamientos_totales']}
@@ -894,11 +996,10 @@ ESTADÍSTICAS:
         
         return texto
     
-    # ========== NUEVOS MÉTODOS v0.3 ==========
+    # ========== MÉTODOS v0.3 ==========
     
     def _responder_analizar_codigo(self):
-        """Analiza un archivo de su propio código (NUEVO v0.3)"""
-        # Analiza su archivo principal
+        """Analiza un archivo de su propio código"""
         analisis = self.auto_analisis.analizar_archivo('core/razonamiento.py')
         
         if 'error' in analisis:
@@ -927,10 +1028,12 @@ ESTADÍSTICAS:
         
         return texto
     
+    # ========== MÉTODOS DE CIERRE ==========
+    
     def dormir(self):
         """Detiene el sistema de forma elegante"""
         print("\n🌙 Iniciando secuencia de descanso...")
-        logging.info("=== BELLADONNA v0.3 ENTRANDO EN MODO DESCANSO ===")
+        logging.info("=== BELLADONNA v0.4 ENTRANDO EN MODO DESCANSO ===")
         
         self.activo = False
         
@@ -943,14 +1046,20 @@ ESTADÍSTICAS:
         estado, alertas = self.estado.evaluar_estado_global()
         print(f"\n   Estado final: {estado}")
         
-        # Resumen de aprendizaje
+        # Resumen de aprendizaje v0.2
         stats = self.aprendizaje_acelerado.estadisticas
         print(f"\n   📚 Aprendizaje de esta sesión:")
         print(f"      • {stats['total_aprendido']} interacciones procesadas")
         print(f"      • {stats['lagunas_identificadas']} lagunas identificadas")
         print(f"      • {stats['lagunas_resueltas']} lagunas resueltas")
         
-        # NUEVO v0.3: Resumen de pensamiento autónomo
+        # NUEVO v0.4: Resumen de aprendizaje autónomo
+        stats_v04 = self.orquestador_aprendizaje.obtener_estadisticas()
+        print(f"\n   🆕 Aprendizaje autónomo v0.4:")
+        print(f"      • Vocabulario total: {stats_v04['vocabulario_total']} palabras")
+        print(f"      • Aprendidas hoy: {stats_v04['aprendidas_hoy']}")
+        
+        # Resumen de pensamiento autónomo v0.3
         resumen_pensamiento = self.pensamiento.obtener_resumen()
         print(f"\n   🧠 Pensamiento autónomo:")
         print(f"      • {resumen_pensamiento['pensamientos_totales']} pensamientos generados")
@@ -961,14 +1070,17 @@ ESTADÍSTICAS:
             for alerta in alertas:
                 print(f"      {alerta}")
         
-        print("\n✅ Belladonna v0.3 en modo descanso")
+        print("\n✅ Belladonna v0.4 en modo descanso")
         print()
         
-        logging.info("Belladonna v0.3 en modo descanso")
+        logging.info("Belladonna v0.4 en modo descanso")
     
     def obtener_estado_completo(self):
         """Retorna estado completo del sistema"""
         estado_base = self.introspector.obtener_estado_completo()
+        
+        # Añade info de v0.4
+        estado_base['aprendizaje'] = self.orquestador_aprendizaje.obtener_estadisticas()
         
         # Añade info de v0.3
         estado_base['pensamiento_autonomo'] = self.pensamiento.obtener_resumen()

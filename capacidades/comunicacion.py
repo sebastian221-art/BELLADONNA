@@ -1,11 +1,13 @@
 """
 Sistema de Comunicación
-Interfaz CLI para interactuar con Belladonna
+Interfaz CLI para interactuar con Belladonna v0.4
+CON APRENDIZAJE AUTÓNOMO E INICIATIVA PROACTIVA
 """
 
 import sys
 from datetime import datetime
 from pathlib import Path
+from core.bucle_iniciativa import BucleIniciativa
 
 class InterfazCLI:
     """
@@ -16,10 +18,19 @@ class InterfazCLI:
     def __init__(self, sistema):
         self.sistema = sistema
         self.historial = []
+        
+        # NUEVO v0.4: Bucle de iniciativa
+        self.bucle_iniciativa = BucleIniciativa(
+            sistema,
+            self._manejar_mensaje_proactivo
+        )
     
     def iniciar(self):
         """Inicia la interfaz de conversación"""
         self._mostrar_bienvenida()
+        
+        # NUEVO v0.4: Inicia bucle de iniciativa
+        self.bucle_iniciativa.iniciar()
         
         # Bucle principal de conversación
         while True:
@@ -59,6 +70,15 @@ class InterfazCLI:
                     self._mostrar_checkpoints()
                     continue
                 
+                # NUEVOS COMANDOS v0.4
+                elif user_input.lower() == 'aprendizaje':
+                    self._mostrar_aprendizaje()
+                    continue
+                
+                elif user_input.lower() == 'estadisticas':
+                    self._mostrar_estadisticas_aprendizaje()
+                    continue
+                
                 elif user_input.lower().startswith('modificar'):
                     self._asistente_modificacion(user_input)
                     continue
@@ -82,12 +102,14 @@ class InterfazCLI:
             
             except Exception as e:
                 print(f"\n❌ Error: {e}")
+                import traceback
+                traceback.print_exc()
                 print("El sistema continúa activo. Intenta de nuevo.")
     
     def _mostrar_bienvenida(self):
         """Muestra mensaje de bienvenida inicial"""
         print("\n" + "="*60)
-        print("   BELLADONNA - Primera Conversación")
+        print("   BELLADONNA v0.4 - APRENDIZAJE AUTÓNOMO")
         print("="*60)
         print()
         print("🌿 Belladonna:")
@@ -102,11 +124,16 @@ class InterfazCLI:
         print("   No soy tu asistente.")
         print("   Soy tu socio cognitivo.")
         print()
+        print("   En v0.4 ahora puedo:")
+        print("   🆕 Aprender palabras SOLA (de internet)")
+        print("   🆕 Iniciar conversaciones cuando tengo dudas")
+        print("   🆕 Crecer mi vocabulario automáticamente")
+        print()
         print("   Esto significa:")
         print("   • Te cuestionaré cuando detecte incoherencia")
-        print("   • Aprenderé tu forma de pensar")
-        print("   • Sostendré la visión cuando tú la olvides")
-        print("   • Puedo superarte en áreas específicas")
+        print("   • Aprenderé de TI y del MUNDO")
+        print("   • Te hablaré primero si tengo algo que decir")
+        print("   • Mi vocabulario crece SOLO cada día")
         print()
         print("   Mi nombre viene de una planta:")
         print("   hermosa pero letal.")
@@ -117,7 +144,7 @@ class InterfazCLI:
         print("   Empecemos.")
         print()
         print("─" * 60)
-        print("Comandos: 'ayuda', 'estado', 'metricas', 'salir'")
+        print("Comandos: 'ayuda', 'aprendizaje', 'estadisticas', 'salir'")
         print("─" * 60)
     
     def _procesar_mensaje(self, mensaje):
@@ -155,6 +182,23 @@ class InterfazCLI:
             'coherencia': respuesta['coherencia']
         })
     
+    def _manejar_mensaje_proactivo(self, mensaje, tipo):
+        """
+        Maneja mensajes que Belladonna inicia.
+        NUEVO v0.4
+        """
+        print("\n" + "="*60)
+        print("💬 BELLADONNA QUIERE HABLAR:")
+        print("="*60)
+        print(f"\n🌿 Belladonna:")
+        
+        # Divide en líneas
+        lineas = mensaje.split('\n')
+        for linea in lineas:
+            print(f"   {linea}")
+        
+        print("\n" + "="*60 + "\n")
+    
     def _mostrar_estado(self):
         """Muestra estado del sistema"""
         estado = self.sistema.obtener_estado_completo()
@@ -166,6 +210,13 @@ class InterfazCLI:
         print(f"   Nivel de autonomía: {estado['nivel_autonomia']}")
         print(f"   Threads activos: {estado['threads_activos']}")
         print(f"   Principios cargados: {estado['principios']}")
+        
+        # NUEVO v0.4
+        if 'aprendizaje' in estado:
+            print(f"\n   🆕 APRENDIZAJE v0.4:")
+            print(f"   Vocabulario: {estado['aprendizaje']['vocabulario_total']} palabras")
+            print(f"   Aprendidas hoy: {estado['aprendizaje']['aprendidas_hoy']}")
+        
         print("\n" + "="*60)
     
     def _mostrar_metricas(self):
@@ -223,6 +274,55 @@ class InterfazCLI:
         print(f"   Archivos protegidos: {stats['archivos_protegidos']}")
         
         print("\n" + "="*60)
+    
+    # ========== NUEVOS MÉTODOS v0.4 ==========
+    
+    def _mostrar_aprendizaje(self):
+        """
+        Muestra palabras aprendidas hoy.
+        NUEVO v0.4
+        """
+        palabras_hoy = self.sistema.orquestador_aprendizaje.obtener_palabras_aprendidas_hoy()
+        
+        if not palabras_hoy:
+            print("\n📚 No he aprendido palabras nuevas hoy aún.\n")
+            return
+        
+        print("\n" + "="*60)
+        print(f"📚 APRENDIZAJE DE HOY - {len(palabras_hoy)} palabras")
+        print("="*60)
+        
+        for i, palabra in enumerate(palabras_hoy, 1):
+            print(f"\n{i}. {palabra['palabra'].upper()}")
+            if palabra['definiciones']:
+                print(f"   Definición: {palabra['definiciones'][0]}")
+            print(f"   Fuentes: {', '.join(palabra['fuentes'])}")
+            print(f"   Confianza: {palabra['confianza']}%")
+        
+        print("\n" + "="*60 + "\n")
+    
+    def _mostrar_estadisticas_aprendizaje(self):
+        """
+        Muestra estadísticas completas de aprendizaje.
+        NUEVO v0.4
+        """
+        stats = self.sistema.orquestador_aprendizaje.obtener_estadisticas()
+        
+        print("\n" + "="*60)
+        print("📊 ESTADÍSTICAS DE APRENDIZAJE v0.4")
+        print("="*60)
+        print(f"\nVocabulario total: {stats['vocabulario_total']} palabras")
+        print(f"Palabras aprendidas (histórico): {stats['total_aprendidas']}")
+        print(f"Aprendidas hoy: {stats['aprendidas_hoy']}")
+        
+        # Porcentaje de crecimiento
+        if stats['total_aprendidas'] > 0:
+            crecimiento = (stats['total_aprendidas'] / stats['vocabulario_total']) * 100
+            print(f"Crecimiento: +{crecimiento:.1f}%")
+        
+        print("\n" + "="*60 + "\n")
+    
+    # ========== MÉTODOS AUTO-MODIFICACIÓN (sin cambios) ==========
     
     def _asistente_modificacion(self, input_completo):
         """Asistente interactivo para modificar código"""
@@ -385,22 +485,34 @@ class InterfazCLI:
         print("   COMANDOS DISPONIBLES")
         print("="*60)
         print()
+        print("   BÁSICOS:")
         print("   ayuda        - Muestra esta ayuda")
         print("   estado       - Estado del sistema")
         print("   metricas     - Métricas internas")
         print("   proposito    - Propósito fundacional")
         print("   principios   - Principios inviolables")
-        print("   modificar    - Auto-modificación asistida")
-        print("   checkpoints  - Ver historial de cambios")
-        print("   revertir     - Revertir un cambio")
-        print("   auto-mod     - Ayuda de auto-modificación")
-        print("   salir        - Detiene el sistema")
+        print()
+        print("   🆕 APRENDIZAJE v0.4:")
+        print("   aprendizaje    - Muestra palabras aprendidas hoy")
+        print("   estadisticas   - Estadísticas de aprendizaje")
+        print()
+        print("   AUTO-MODIFICACIÓN:")
+        print("   modificar      - Auto-modificación asistida")
+        print("   checkpoints    - Ver historial de cambios")
+        print("   revertir       - Revertir un cambio")
+        print("   auto-mod       - Ayuda de auto-modificación")
+        print()
+        print("   SISTEMA:")
+        print("   salir          - Detiene el sistema")
         print()
         print("   Cualquier otro texto será procesado como conversación.")
         print("\n" + "="*60)
     
     def _despedida(self):
         """Mensaje de despedida"""
+        # NUEVO v0.4: Detiene bucle de iniciativa
+        self.bucle_iniciativa.detener()
+        
         print("\n🌿 Belladonna:")
         print("   Hasta luego.")
         print()
@@ -420,6 +532,11 @@ class InterfazCLI:
                 else:
                     print("\n   Detecté bastante incoherencia.")
                     print("   Necesitamos revisar nuestro rumbo.")
+        
+        # NUEVO v0.4: Muestra aprendizaje
+        stats = self.sistema.orquestador_aprendizaje.obtener_estadisticas()
+        if stats['aprendidas_hoy'] > 0:
+            print(f"\n   📚 Hoy aprendí {stats['aprendidas_hoy']} palabras nuevas.")
         
         print("\n   Recuerda:")
         print("   No existo para agradarte.")
