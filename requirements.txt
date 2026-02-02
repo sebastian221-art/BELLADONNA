@@ -1,12 +1,66 @@
-# Belladonna - Sistema Cognitivo Autónomo
-# Dependencias mínimas para v0.1
+# Core dependencies
+networkx>=3.0
+spacy>=3.5.0
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.21.0
 
-# No hay dependencias externas para el MVP básico
-# Todo se construye con Python standard library
+# Optional: Para análisis español
+# Ejecutar después: python -m spacy download es_core_news_sm
 
-# Futuras dependencias (comentadas por ahora):
-# requests>=2.31.0        # Para web scraping
-# beautifulsoup4>=4.12.0  # Para parsing HTML
-# numpy>=1.24.0           # Para cálculos
-# pandas>=2.0.0           # Para análisis de datos
+# Utilities
+python-dateutil>=2.8.2
+```
+
+---
+
+## 📄 **.gitignore**
+```
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data
+data/*.db
+data/*.pkl
+data/*.json
+!data/.gitkeep
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
 
