@@ -1,8 +1,8 @@
 """
 Belladonna - Sistema Conversacional con Grounding Computacional Real.
 
-FASE 1 - VERSIÓN COMPLETA
-Arquitectura Cognitiva con Lenguaje Interno Explícito
+FASE 2 - VERSIÓN MODULAR
+Arquitectura Cognitiva con Sistema de Consejo Multi-Perspectiva
 """
 import sys
 from pathlib import Path
@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from vocabulario.gestor_vocabulario import GestorVocabulario
 from traduccion.traductor_entrada import TraductorEntrada
 from razonamiento.motor_razonamiento import MotorRazonamiento
-from consejeras.vega import Vega
+from consejeras.gestor_consejeras import GestorConsejeras  # ← MODIFICADO: usar gestor
 from generacion.generador_salida import GeneradorSalida
 
 class Belladonna:
@@ -24,7 +24,7 @@ class Belladonna:
     1. Usuario habla en español
     2. Traductor → Conceptos internos
     3. Motor → Razonamiento
-    4. Vega → Protección ética
+    4. Consejeras → Protección ética (múltiples perspectivas)  # ← MODIFICADO
     5. Generador → Respuesta español
     """
     
@@ -43,10 +43,17 @@ class Belladonna:
         self.gestor = GestorVocabulario()
         self.traductor = TraductorEntrada(self.gestor)
         self.motor = MotorRazonamiento()
-        self.vega = Vega()
+        
+        # ← MODIFICADO: Usar gestor de consejeras
+        self.gestor_consejeras = GestorConsejeras()
+        self.consejeras = self.gestor_consejeras.obtener_activas()
+        
         self.generador = GeneradorSalida()
         
         print(f"✅ Sistema cargado: {len(self.gestor.obtener_todos())} conceptos")
+        print(f"✅ Consejeras activas: {len(self.consejeras)}")  # ← MODIFICADO
+        for consejera in self.consejeras:
+            print(f"   • {consejera.nombre} ({consejera.especialidad})")
         print()
     
     def procesar(self, mensaje_usuario: str) -> str:
@@ -72,16 +79,28 @@ class Belladonna:
         if self.verbose:
             print(f"[Decisión: {decision.tipo.name}, certeza {decision.certeza:.0%}]")
         
-        # PASO 3: Vega revisa
-        revision = self.vega.revisar(decision, {'traduccion': traduccion})
+        # PASO 3: Consejeras revisan (solo Vega por ahora tiene veto)
+        # ← MODIFICADO: Revisar con todas las consejeras activas
+        revision_final = None
+        for consejera in self.consejeras:
+            revision = consejera.revisar(decision, {'traduccion': traduccion})
+            
+            if self.verbose:
+                print(f"[{consejera.nombre}: {'VETO' if revision.get('veto') else 'OK'}]")
+            
+            # Si alguna veta, usar esa revisión
+            if revision.get('veto'):
+                revision_final = revision
+                break
         
-        if self.verbose and revision['veto']:
-            print(f"[Vega: VETO - {revision['principio_violado'].name}]")
+        # Si nadie vetó, usar última revisión
+        if revision_final is None and self.consejeras:
+            revision_final = revision
         
         # PASO 4: Generar respuesta
         respuesta = self.generador.generar(decision, {
             'traduccion': traduccion,
-            'revision_vega': revision
+            'revision_vega': revision_final  # Mantener nombre por compatibilidad
         })
         
         return respuesta
@@ -94,16 +113,18 @@ class Belladonna:
         - 'exit' o 'salir': Termina
         - 'verbose': Activa/desactiva modo verbose
         - 'stats': Muestra estadísticas
+        - 'consejeras': Lista consejeras activas
         """
         print("=" * 70)
-        print(" " * 20 + "🌿 BELLADONNA v1.0 🌿")
-        print(" " * 15 + "Fase 1 - Sistema Conversacional")
+        print(" " * 20 + "🌿 BELLADONNA v2.0 🌿")
+        print(" " * 15 + "Fase 2 - Sistema de Consejo")
         print("=" * 70)
         print()
         print("Comandos especiales:")
         print("  • 'exit' o 'salir': Terminar")
         print("  • 'verbose': Activar/desactivar modo detallado")
         print("  • 'stats': Ver estadísticas del sistema")
+        print("  • 'consejeras': Ver consejeras activas")
         print("  • 'help': Mostrar ayuda")
         print()
         
@@ -135,6 +156,10 @@ class Belladonna:
                 
                 elif mensaje.lower() == 'stats':
                     self._mostrar_estadisticas()
+                    continue
+                
+                elif mensaje.lower() == 'consejeras':
+                    self._mostrar_consejeras()
                     continue
                 
                 elif mensaje.lower() == 'help':
@@ -181,10 +206,26 @@ class Belladonna:
         print(f"Conceptos ejecutables: {stats['con_operaciones']}")
         print()
         
-        vega_stats = self.vega.estadisticas()
-        print(f"Vega - Revisiones: {vega_stats['revisiones']}")
-        print(f"Vega - Vetos: {vega_stats['vetos']}")
-        print(f"Vega - Tasa veto: {vega_stats['tasa_veto']:.0%}")
+        print("Consejeras:")
+        for consejera in self.consejeras:
+            stats_consejera = consejera.estadisticas()
+            print(f"  {stats_consejera['nombre']}:")
+            print(f"    - Revisiones: {stats_consejera['revisiones']}")
+            print(f"    - Vetos: {stats_consejera.get('vetos', 0)}")
+        print("=" * 70)
+        print()
+    
+    def _mostrar_consejeras(self):
+        """Muestra consejeras activas."""
+        print()
+        print("=" * 70)
+        print("CONSEJERAS ACTIVAS")
+        print("=" * 70)
+        for consejera in self.consejeras:
+            print(f"\n{consejera.nombre} - {consejera.especialidad}")
+            print(f"  Estado: {'Activa' if consejera.activa else 'Inactiva'}")
+            stats = consejera.estadisticas()
+            print(f"  Revisiones: {stats['revisiones']}")
         print("=" * 70)
         print()
     
@@ -209,6 +250,7 @@ class Belladonna:
         print("Comandos especiales:")
         print("  • 'verbose': Activar modo detallado")
         print("  • 'stats': Ver estadísticas")
+        print("  • 'consejeras': Ver consejeras activas")
         print("  • 'exit': Salir")
         print("=" * 70)
         print()
