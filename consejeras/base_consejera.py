@@ -72,13 +72,20 @@ class Consejera(ABC):
     
     def estadisticas(self) -> Dict:
         """Retorna estadísticas de la consejera."""
+        # Calcular tasa de veto
+        if self.revisiones_realizadas > 0:
+            tasa_veto = self.vetos_aplicados / self.revisiones_realizadas
+        else:
+            tasa_veto = 0.0
+        
         return {
             'nombre': self.nombre,
             'especialidad': self.especialidad,
             'activa': self.activa,
             'revisiones': self.revisiones_realizadas,
             'vetos': self.vetos_aplicados,
-            'opiniones': self.opiniones_dadas
+            'opiniones': self.opiniones_dadas,
+            'tasa_veto': round(tasa_veto, 2)  # ← AGREGADO
         }
     
     def __repr__(self) -> str:
