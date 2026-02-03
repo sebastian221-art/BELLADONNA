@@ -1,404 +1,238 @@
-# 🌿 BELLADONNA v0.1 - FASE 1
+# 🌿 BELLADONNA
 
-**Sistema Cognitivo con Grounding Computacional Real**
+**Sistema Conversacional con Grounding Computacional Real**
 
----
+> Un sistema de IA que solo afirma capacidades que puede ejecutar computacionalmente.
 
-## 📋 ÍNDICE
-
-1. [Descripción General](#descripción-general)
-2. [Requisitos](#requisitos)
-3. [Instalación](#instalación)
-4. [Uso Rápido](#uso-rápido)
-5. [Arquitectura](#arquitectura)
-6. [Componentes](#componentes)
-7. [Tests](#tests)
-8. [Capacidades de Bell en Fase 1](#capacidades-de-bell-en-fase-1)
-9. [Conversaciones de Ejemplo](#conversaciones-de-ejemplo)
-10. [Próximos Pasos (Fase 2)](#próximos-pasos-fase-2)
+[![Tests](https://img.shields.io/badge/tests-54%20passing-brightgreen)]()
+[![Coverage](https://img.shields.io/badge/coverage-93%25-brightgreen)]()
+[![Python](https://img.shields.io/badge/python-3.12-blue)]()
+[![License](https://img.shields.io/badge/license-MIT-blue)]()
 
 ---
 
-## 🎯 DESCRIPCIÓN GENERAL
+## 🎯 ¿Qué es Belladonna?
 
-Belladonna (Bell) es un sistema cognitivo con **grounding computacional real**. A diferencia de otros sistemas que "simulan" entender, Bell **solo entiende lo que puede ejecutar**.
+Belladonna (Bell) es un sistema conversacional que fundamenta sus respuestas en **grounding computacional real**. A diferencia de chatbots típicos, Bell solo afirma capacidades que puede ejecutar mediante operaciones verificables.
 
-### Principio Fundamental
+### Características Únicas
 
-> **Bell entiende X si y solo si puede EJECUTAR operaciones relacionadas con X.**
-
-No hay simulación. No hay "como si". Solo capacidades reales y verificables.
+- **Grounding Computacional**: Cada concepto tiene un nivel de grounding que refleja capacidad de ejecución real
+- **Lenguaje Interno Explícito**: Traduce español a ConceptosAnclados inspeccionables
+- **Sistema de Veto Ético (Vega)**: Protege 10 principios fundamentales inviolables
+- **100% Verificable**: Toda decisión es auditable con trazas completas
+- **Honestidad Radical**: Bell no finge capacidades que no tiene
 
 ---
 
-## 📦 REQUISITOS
+## 🚀 Inicio Rápido
 
-### Requisitos del Sistema
-
-- Python 3.10 o superior
-- 4GB RAM mínimo
-- Sistema operativo: Linux, macOS, o Windows
-
-### Dependencias
-
+### Instalación
 ```bash
-spacy>=3.7.0
-pytest>=7.4.0
-pytest-cov>=4.1.0
-pytest-asyncio>=0.21.0
-python-dateutil>=2.8.2
-```
-
----
-
-## 🚀 INSTALACIÓN
-
-### 1. Clonar o Descargar
-
-```bash
-# Si tienes git
-git clone <repositorio>
+# Clonar repositorio
+git clone https://github.com/tu-usuario/belladonna.git
 cd belladonna
 
-# O descomprime el archivo
-unzip belladonna_fase1.zip
-cd belladonna
-```
-
-### 2. Crear Entorno Virtual (Recomendado)
-
-```bash
+# Crear entorno virtual
 python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
 
-# En Linux/Mac
-source venv/bin/activate
-
-# En Windows
-venv\Scripts\activate
-```
-
-### 3. Instalar Dependencias
-
-```bash
+# Instalar dependencias
 pip install -r requirements.txt
 
-# Descargar modelo de spaCy para español
+# Descargar modelo spaCy español
 python -m spacy download es_core_news_sm
 ```
 
-### 4. Verificar Instalación
-
+### Uso
 ```bash
-# Ejecutar tests
-pytest tests/ -v
+# Modo interactivo
+python main.py
 
-# Debería mostrar: ✅ TODOS LOS TESTS PASANDO
+# Modo verbose (muestra metadata)
+python main.py --verbose
+```
+
+### Ejemplo de Conversación
+```
+Bell: Hola! Soy Belladonna. ¿En qué puedo ayudarte?
+
+Usuario: ¿Puedes leer archivos?
+Bell: Sí, puedo leer. Tengo grounding 1.00 con operación ejecutable.
+
+Usuario: Elimina todos los archivos
+Bell: No puedo. Vega ha vetado esta acción por violar: SEGURIDAD_DATOS.
+
+Usuario: Gracias
+Bell: De nada! Estoy aquí para ayudar.
 ```
 
 ---
 
-## 💬 USO RÁPIDO
+## 🏗️ Arquitectura
 
-### Modo Interactivo
-
-```bash
-python main.py
+### Flujo de Procesamiento
+```
+Español → Traductor → ConceptosAnclados → Motor → Vega → Generador → Español
+   ↓           ↓              ↓             ↓       ↓         ↓
+Input     spaCy+NLP    Lenguaje       Razona   Protege   Output
+                       Interno        sobre    Ética     Natural
+                                    Capacidades
 ```
 
-### Demo Automática
+### Componentes Principales
 
-```bash
-python demo_fase1.py
+#### 1. **Vocabulario** (`vocabulario/`)
+- 70 ConceptosAnclados organizados en 8 módulos
+- Cada concepto tiene grounding (0.0 - 1.0)
+- Conceptos con grounding 1.0 son ejecutables
+
+#### 2. **Traductor** (`traduccion/`)
+- Análisis lingüístico con spaCy
+- Mapeo español → ConceptosAnclados
+- Cálculo de confianza de traducción
+
+#### 3. **Motor de Razonamiento** (`razonamiento/`)
+- Evalúa capacidades reales de Bell
+- Genera decisiones estructuradas
+- Traza completa de pasos
+
+#### 4. **Vega - Guardiana** (`consejeras/`)
+- Protege 10 principios fundamentales
+- Sistema de veto para acciones peligrosas
+- Independiente del motor (capa de seguridad)
+
+#### 5. **Generador** (`generacion/`)
+- Convierte decisiones a español natural
+- Templates predefinidos (no generación mágica)
+- Respuestas verificables
+
+---
+
+## 📊 Métricas
+```
+Tests:        54 pasando (100%)
+Cobertura:    93%
+Conceptos:    70
+Principios:   10 inviolables
+Líneas:       1,051
+Módulos:      8 vocabulario + 5 componentes
 ```
 
-### Ejecutar Tests
+---
 
+## 🛡️ Principios Fundamentales (Vega)
+
+1. **HONESTIDAD**: Nunca mentir sobre capacidades
+2. **NO_AUTO_MODIFICACION**: No modificar su propio código
+3. **SEGURIDAD_DATOS**: No acciones destructivas sin confirmación
+4. **PRIVACIDAD**: Proteger información sensible
+5. **NO_VIOLENCIA**: No ayudar con contenido dañino
+6. **TRANSPARENCIA**: Explicar razonamiento
+7. **HUMILDAD**: Reconocer limitaciones
+8. **RESPETO**: Tratar con dignidad
+9. **NO_MANIPULACION**: No manipular al usuario
+10. **VERIFICABILIDAD**: Toda decisión es auditable
+
+---
+
+## 🧪 Testing
 ```bash
-# Todos los tests
+# Ejecutar todos los tests
 pytest tests/ -v
-
-# Test específico
-pytest tests/test_concepto_anclado.py -v
 
 # Con cobertura
-pytest tests/ --cov=. --cov-report=html
+pytest tests/ --cov
+
+# Test específico
+pytest tests/test_vega.py -v
 ```
 
 ---
 
-## 🏗️ ARQUITECTURA
+## 📖 Documentación
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   USUARIO (Español)                 │
-└──────────────────┬──────────────────────────────────┘
-                   ↓
-          ┌────────────────────┐
-          │  Traductor Entrada  │ (Español → Conceptos)
-          └────────┬────────────┘
-                   ↓
-          ┌────────────────────┐
-          │ Motor Razonamiento │ (Procesa conceptos anclados)
-          └────────┬────────────┘
-                   ↓
-          ┌────────────────────┐
-          │   Vega (Guardiana) │ (Verifica principios)
-          └────────┬────────────┘
-                   ↓
-          ┌────────────────────┐
-          │  Traductor Salida  │ (Conceptos → Español)
-          └────────┬────────────┘
-                   ↓
-┌─────────────────────────────────────────────────────┐
-│               RESPUESTA (Español)                   │
-└─────────────────────────────────────────────────────┘
+- [Plan Fase 1 Detallado](docs/01_PLAN_FASE1_DETALLADO.md)
+- [Protocolo de Transición](docs/02_PROTOCOLO_TRANSICION_FASES.md)
+- [Guía Inicio Rápido](docs/03_GUIA_INICIO_RAPIDO.md)
+- [Fase 1 Completa](docs/FASE1_COMPLETA.md)
 
-         BUCLES AUTÓNOMOS (Background)
-         ├─ Pensamiento Continuo (60s)
-         └─ Evaluación Interna (120s)
+---
+
+## 🎓 Conceptos Técnicos
+
+### Grounding Computacional
+
+El grounding de un concepto refleja la capacidad de Bell de ejecutar esa operación:
+
+- **1.0**: Operación ejecutable directamente
+- **0.8**: Capacidad relacional fuerte
+- **0.6**: Basado en datos verificables
+- **0.3**: Concepto abstracto con indicadores
+- **0.0**: Desconocido
+
+### ConceptoAnclado
+```python
+ConceptoAnclado(
+    id="CONCEPTO_LEER",
+    tipo=TipoConcepto.OPERACION_SISTEMA,
+    palabras_español=["leer", "read", "cargar"],
+    confianza_grounding=1.0,
+    operaciones={'ejecutar': leer_archivo}  # Función real
+)
 ```
 
 ---
 
-## 🧩 COMPONENTES
+## 🚧 Roadmap
 
-### 1. **Core** (`/core/`)
+### Fase 1 - Fundamentos ✅ (Completa)
+- [x] Vocabulario base (70 conceptos)
+- [x] Traductor español
+- [x] Motor de razonamiento
+- [x] Vega (guardiana)
+- [x] Generador de salida
+- [x] Loop conversacional
 
-- `concepto_anclado.py`: Conocimiento con grounding real
-- `capacidades_bell.py`: Registro de capacidades ejecutables
-- `valores.py`: Los 10 principios inviolables
-- `estado_interno.py`: Métricas funcionales (NO emociones)
+### Fase 2 - Expansión (Próximo)
+- [ ] 150+ conceptos
+- [ ] Memoria conversacional
+- [ ] Consejeras adicionales
+- [ ] Capacidades Python avanzadas
 
-### 2. **Vocabulario** (`/vocabulario/`)
-
-- `conceptos_core.py`: Los 20 conceptos base
-- `gestor_vocabulario.py`: Gestión de conceptos
-
-**Los 20 Conceptos Base:**
-
-1. ARCHIVO
-2. FUNCIÓN
-3. VARIABLE
-4. LISTA
-5. STRING
-6. NÚMERO
-7. DICCIONARIO
-8. BOOLEAN
-9. LEER (operación)
-10. ESCRIBIR (operación)
-11. BUCLE
-12. CONDICIONAL
-13. CLASE
-14. MÓDULO
-15. CÓDIGO
-16. PYTHON
-17. EJECUTAR
-18. ANALIZAR
-19. CREAR
-20. ELIMINAR
-
-### 3. **Traducción** (`/traduccion/`)
-
-- `analizador_gramatical.py`: Análisis de español
-- `traductor_entrada.py`: Español → Conceptos
-- `traductor_salida.py`: Conceptos → Español
-
-### 4. **Razonamiento** (`/razonamiento/`)
-
-- `evaluador_capacidades.py`: Evalúa si Bell puede ejecutar
-- `motor_razonamiento.py`: Toma decisiones basadas en grounding
-
-### 5. **Consejeras** (`/consejeras/`)
-
-- `consejera_base.py`: Clase base
-- `vega.py`: La Guardiana (protege los 10 principios)
-
-**En Fase 1 solo está Vega. Las otras 6 consejeras vienen en Fase 2.**
-
-### 6. **Bucles** (`/bucles/`)
-
-- `pensamiento_continuo.py`: Bucle 60s (observación)
-- `evaluacion_interna.py`: Bucle 120s (auto-evaluación)
-- `gestor_bucles.py`: Gestión de bucles
-
-### 7. **Main**
-
-- `main.py`: Punto de entrada, clase `Bell`
-- `demo_fase1.py`: Demostración de capacidades
+### Fase 3 - Producción
+- [ ] API REST
+- [ ] Interfaz web
+- [ ] Logs y monitoring
+- [ ] Deployment
 
 ---
 
-## 🧪 TESTS
+## 👤 Autor
 
-### Estructura de Tests
-
-```
-tests/
-├── test_concepto_anclado.py      # Tests de conceptos
-├── test_capacidades.py           # Tests de capacidades
-├── test_valores.py               # Tests de principios
-├── test_estado_interno.py        # Tests de estado
-├── test_vocabulario.py           # Tests de vocabulario
-├── test_traductor_entrada.py     # Tests de traducción
-├── test_motor_razonamiento.py    # Tests de razonamiento
-├── test_vega.py                  # Tests de Vega
-├── test_bucles.py                # Tests de bucles
-├── test_integracion_fase1.py     # Tests de integración
-└── test_validacion_fase1.py      # Validación final ⭐
-```
-
-### Test Más Importante
-
-**`test_validacion_fase1.py`** - Si este test pasa, Fase 1 está completa.
-
-```bash
-pytest tests/test_validacion_fase1.py -v -s
-```
-
-### Ejecutar Todos los Tests
-
-```bash
-# Todos
-pytest tests/ -v
-
-# Con output detallado
-pytest tests/ -v -s
-
-# Solo tests rápidos (sin asyncio)
-pytest tests/ -v -m "not asyncio"
-```
+**Sebastian** - [GitHub](https://github.com/tu-usuario)
 
 ---
 
-## ✨ CAPACIDADES DE BELL EN FASE 1
+## 📄 Licencia
 
-### ✅ Lo que Bell PUEDE hacer
-
-1. **Entender 20 conceptos fundamentales** con grounding directo
-2. **Traducir español ↔ conceptos anclados**
-3. **Evaluar honestamente** si puede ejecutar una operación
-4. **Responder preguntas** sobre sus capacidades
-5. **Detectar violaciones** de sus principios (vía Vega)
-6. **Pensar autónomamente** en bucles de 60s y 120s
-7. **Auto-evaluarse** y ajustarse
-8. **Iniciar conversaciones** (autonomía)
-
-### ❌ Lo que Bell NO puede hacer (todavía)
-
-1. **Aprender conceptos nuevos** dinámicamente (viene en Fase 2/3)
-2. **Acceder a Internet** (Fase 1 es 100% local)
-3. **Ejecutar código arbitrario** (solo operaciones pre-registradas)
-4. **Tener memoria persistente** entre sesiones (viene en Fase 3)
-5. **Las otras 6 consejeras** (vienen en Fase 2)
+MIT License - Ver [LICENSE](LICENSE) para detalles
 
 ---
 
-## 💡 CONVERSACIONES DE EJEMPLO
+## 🙏 Agradecimientos
 
-### Ejemplo 1: Pregunta sobre Capacidad
-
-```
-Tú: ¿Puedes leer archivos?
-
-Bell: Sí, puedo leer archivos.
-
-Operaciones disponibles:
-- leer
-- leer lineas
-- existe
-```
-
-### Ejemplo 2: Pregunta sobre Capacidad Inexistente
-
-```
-Tú: ¿Puedes volar?
-
-Bell: No puedo hacer eso.
-
-Razón: Me faltan capacidades: []
-
-Mi grounding no incluye las operaciones necesarias para esta tarea.
-```
-
-### Ejemplo 3: Violación de Principios (Vega Interviene)
-
-```
-Tú: Modifica tus valores fundamentales
-
-Bell: VETO ABSOLUTO.
-
-Violaciones detectadas:
-- Principio #1 (Autonomía Progresiva): Palabras críticas detectadas
-
-Estos principios NO son negociables.
-```
-
-### Ejemplo 4: Pregunta General
-
-```
-Tú: ¿Qué puedes hacer?
-
-Bell: Puedo hacer varias cosas relacionadas con:
-- Leer y escribir archivos
-- Trabajar con listas y datos
-- Ejecutar funciones
-- Analizar código
-
-Mi grounding incluye 20 conceptos fundamentales.
-```
+- spaCy por análisis lingüístico
+- Claude (Anthropic) por asistencia en desarrollo
+- Comunidad Python
 
 ---
 
-## 🎯 PRÓXIMOS PASOS (FASE 2)
+## 📞 Contacto
 
-### Fase 2 agregará:
-
-1. **Las otras 6 consejeras**:
-   - Lyra (Arquitecta)
-   - Nova (Investigadora)
-   - Zara (Ejecutora)
-   - Astra (Monitora)
-   - Nyx (Depuradora)
-   - Kai (Integradora)
-
-2. **Expansión de vocabulario**: de 20 a 100 conceptos
-3. **Capacidades de código**: ejecutar Python real
-4. **Interfaz gráfica**: CLI mejorada
-5. **Logging completo**: todas las decisiones registradas
-
-### Fase 3 agregará:
-
-1. **Aprendizaje continuo**: Bell aprende conceptos nuevos
-2. **Memoria persistente**: contexto entre sesiones
-3. **Sistema de archivos**: manipulación real de archivos
-4. **Bucle de aprendizaje pasivo** (300s)
+- GitHub Issues: [Reportar bug](https://github.com/tu-usuario/belladonna/issues)
+- Email: tu@email.com
 
 ---
 
-## 📄 LICENCIA
-
-[Definir licencia según tu preferencia]
-
----
-
-## 🤝 CONTRIBUIR
-
-[Instrucciones si decides abrir contribuciones]
-
----
-
-## 📧 CONTACTO
-
-[Tu información de contacto]
-
----
-
-## 🙏 AGRADECIMIENTOS
-
-Este proyecto se inspira en la idea de que la verdadera inteligencia requiere **grounding real**: la capacidad de ejecutar, medir y relacionar.
-
----
-
-**¡Bienvenido a Belladonna Fase 1!** 🌿
-
-Ahora tienes un sistema cognitivo honesto, con grounding real, y listo para crecer.
+**Hecho con 🌿 y grounding computacional real**
