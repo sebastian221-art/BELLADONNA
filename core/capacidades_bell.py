@@ -1,5 +1,8 @@
 """
 Define qué puede hacer Bell en la realidad.
+
+Estas son las ÚNICAS operaciones que Bell puede ejecutar.
+Si algo no está aquí, Bell NO puede hacerlo.
 """
 from pathlib import Path
 from typing import Any
@@ -8,8 +11,7 @@ class CapacidadesBell:
     """
     Operaciones que Bell REALMENTE puede ejecutar.
     
-    Si algo está aquí, Bell lo puede hacer.
-    Si no está aquí, Bell NO puede hacerlo.
+    Cada método aquí representa una capacidad con grounding 1.0.
     """
     
     @staticmethod

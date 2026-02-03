@@ -7,7 +7,7 @@ que Bell puede manipular, ejecutar y razonar sobre ella.
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Callable, Dict, List, Set, Any, Optional
-from core.tipos import TipoConcepto, NivelGrounding
+from core.tipos import TipoConcepto
 
 @dataclass
 class ConceptoAnclado:
@@ -24,30 +24,20 @@ class ConceptoAnclado:
     
     # GROUNDING REAL (lo más importante)
     operaciones: Dict[str, Callable] = field(default_factory=dict)
-    # Operaciones que Bell PUEDE ejecutar
-    # Ejemplo: {'ejecutar': lambda f: open(f).read()}
-    
     accesible_directamente: bool = False
-    # ¿Bell puede ejecutar esto sin intermediarios?
-    
     confianza_grounding: float = 0.0
-    # 0.0-1.0: qué tan segura está Bell de entender esto
     
     # RELACIONES (estructura del conocimiento)
     relaciones: Dict[str, Set[str]] = field(default_factory=dict)
-    # Ejemplo: {'requiere': {'CONCEPTO_ARCHIVO'}}
     
     # PROPIEDADES (conocimiento sobre el concepto)
     propiedades: Dict[str, Any] = field(default_factory=dict)
-    # Ejemplo: {'retorna': 'texto', 'puede_fallar': True}
     
     # DATOS (información variable)
     datos: Dict[str, Any] = field(default_factory=dict)
-    # Ejemplo: {'ejemplos': [...], 'contextos': [...]}
     
     # METADATA (trazabilidad)
     metadata: Dict[str, Any] = field(default_factory=dict)
-    # creado_por, fecha_creacion, veces_usado, precision_uso
     
     def __post_init__(self):
         """Validación después de creación."""
@@ -84,7 +74,6 @@ class ConceptoAnclado:
         if tipo_relacion:
             return otro_concepto_id in self.relaciones.get(tipo_relacion, set())
         else:
-            # Buscar en todas las relaciones
             for relaciones in self.relaciones.values():
                 if otro_concepto_id in relaciones:
                     return True

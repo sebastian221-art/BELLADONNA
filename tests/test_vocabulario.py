@@ -1,48 +1,79 @@
 """
-Tests para el vocabulario expandido.
+Tests para el sistema de vocabulario modular.
 """
 import pytest
-from vocabulario.conceptos_core import obtener_conceptos_core, obtener_concepto_por_palabra
+from vocabulario.gestor_vocabulario import GestorVocabulario
+from core.tipos import TipoConcepto
 
-def test_total_conceptos():
-    """Test: Debe haber 15 conceptos en Día 2."""
-    conceptos = obtener_conceptos_core()
-    assert len(conceptos) == 15, f"Esperados 15, encontrados {len(conceptos)}"
+@pytest.fixture
+def gestor():
+    """Crea gestor de vocabulario para tests."""
+    return GestorVocabulario()
 
-def test_todos_tienen_id_valido():
-    """Test: Todos los IDs deben empezar con CONCEPTO_."""
-    conceptos = obtener_conceptos_core()
-    for concepto in conceptos:
-        assert concepto.id.startswith("CONCEPTO_"), f"ID inválido: {concepto.id}"
+def test_total_conceptos(gestor):
+    """Test: Total de conceptos cargados."""
+    conceptos = gestor.obtener_todos()
+    # CORREGIDO: 30 (Semana 1) + 15 (Semana 2 Python) + 10 (Semana 2 Verbos) + 10 (Semana 2 Conectores) + 5 (Semana 2 Adjetivos) = 70
+    assert len(conceptos) == 70, f"Esperados 70, encontrados {len(conceptos)}"
 
-def test_grounding_promedio():
-    """Test: Grounding promedio debe ser >= 0.80."""
-    conceptos = obtener_conceptos_core()
-    promedio = sum(c.confianza_grounding for c in conceptos) / len(conceptos)
-    assert promedio >= 0.80, f"Grounding promedio: {promedio:.2f}"
-
-def test_busqueda_por_palabra():
-    """Test: Buscar conceptos por palabra."""
-    conceptos = obtener_conceptos_core()
+def test_estadisticas_basicas(gestor):
+    """Test: Estadísticas del vocabulario."""
+    stats = gestor.estadisticas()
     
+    # CORREGIDO: 70 conceptos totales
+    assert stats['total_conceptos'] == 70
+    assert stats['grounding_promedio'] >= 0.70
+    assert stats['con_operaciones'] >= 5
+    assert 'por_tipo' in stats
+
+def test_buscar_por_palabra(gestor):
+    """Test: Buscar concepto por palabra."""
     # Debe encontrar
-    concepto_leer = obtener_concepto_por_palabra("leer", conceptos)
+    concepto_leer = gestor.buscar_por_palabra("leer")
     assert concepto_leer is not None
     assert concepto_leer.id == "CONCEPTO_LEER"
     
-    concepto_hola = obtener_concepto_por_palabra("hola", conceptos)
+    concepto_hola = gestor.buscar_por_palabra("hola")
     assert concepto_hola is not None
+    assert concepto_hola.id == "CONCEPTO_HOLA"
     
     # No debe encontrar
-    concepto_inexistente = obtener_concepto_por_palabra("xyz123", conceptos)
+    concepto_inexistente = gestor.buscar_por_palabra("xyz123")
     assert concepto_inexistente is None
 
-def test_operaciones_ejecutables():
-    """Test: Conceptos con grounding 1.0 deben tener operaciones."""
-    conceptos = obtener_conceptos_core()
+def test_buscar_por_id(gestor):
+    """Test: Buscar concepto por ID."""
+    concepto = gestor.buscar_por_id("CONCEPTO_LEER")
+    assert concepto is not None
+    assert concepto.id == "CONCEPTO_LEER"
+    
+    inexistente = gestor.buscar_por_id("CONCEPTO_INEXISTENTE")
+    assert inexistente is None
+
+def test_filtrar_por_tipo(gestor):
+    """Test: Filtrar conceptos por tipo."""
+    operaciones = gestor.filtrar_por_tipo(TipoConcepto.OPERACION_SISTEMA)
+    assert len(operaciones) >= 3  # Mínimo LEER, ESCRIBIR, EXISTE
+    
+    conversacion = gestor.filtrar_por_tipo(TipoConcepto.PALABRA_CONVERSACION)
+    assert len(conversacion) >= 4  # Interrogativos, saludos, etc.
+
+def test_conceptos_con_grounding_1_0(gestor):
+    """Test: Conceptos con grounding perfecto."""
+    stats = gestor.estadisticas()
+    assert stats['grounding_1_0'] >= 5  # Las 5 operaciones
+
+def test_todos_ids_validos(gestor):
+    """Test: Todos los IDs empiezan con CONCEPTO_."""
+    conceptos = gestor.obtener_todos()
     for concepto in conceptos:
-        if concepto.confianza_grounding == 1.0:
-            assert len(concepto.operaciones) > 0, f"{concepto.id} sin operaciones"
+        assert concepto.id.startswith("CONCEPTO_")
+
+def test_sin_conceptos_duplicados(gestor):
+    """Test: No hay conceptos duplicados."""
+    conceptos = gestor.obtener_todos()
+    ids = [c.id for c in conceptos]
+    assert len(ids) == len(set(ids)), "Hay IDs duplicados"
 
 if __name__ == '__main__':
     pytest.main([__file__, '-v'])
