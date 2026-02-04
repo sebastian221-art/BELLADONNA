@@ -54,12 +54,13 @@ def test_decision_agradecimiento(motor, traductor):
 
 def test_decision_no_entendido(motor, traductor):
     """Test: NO_ENTENDIDO con palabras desconocidas."""
-    traduccion = traductor.traducir("xyz abc qwerty")
+    # CAMBIAR: "abstract" ahora existe en vocabulario
+    traduccion = traductor.traducir("zzzxxx qqwweerr")  # ← Palabras inventadas sin significado
     decision = motor.razonar(traduccion)
     
     assert decision.tipo == TipoDecision.NO_ENTENDIDO
     assert decision.puede_ejecutar == False
-
+    
 def test_pasos_razonamiento_incluidos(motor, traductor):
     """Test: Decisión incluye pasos de razonamiento."""
     traduccion = traductor.traducir("¿Puedes escribir archivos?")

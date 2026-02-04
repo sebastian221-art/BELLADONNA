@@ -25,8 +25,7 @@ class Lyra(Consejera):
     
     def __init__(self):
         """Inicializa Lyra."""
-        super().__init__("Lyra")
-        self.especialidad = "Empatía y Comprensión"
+        super().__init__("Lyra", "Empatía y Comprensión")
         self.puede_vetar = False
         
         # Principios que vigila (observa, no veta)

@@ -95,7 +95,8 @@ def test_generar_no_entendido(sistema_completo):
     motor = sistema_completo['motor']
     generador = sistema_completo['generador']
     
-    traduccion = traductor.traducir("xyz abc qwerty")
+    # CAMBIAR: palabras sin significado
+    traduccion = traductor.traducir("zzzxxx qqwweerr")
     decision = motor.razonar(traduccion)
     
     respuesta = generador.generar(decision, {'traduccion': traduccion})

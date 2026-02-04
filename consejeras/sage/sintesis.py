@@ -26,8 +26,7 @@ class Sage(Consejera):
     
     def __init__(self):
         """Inicializa Sage."""
-        super().__init__("Sage")
-        self.especialidad = "Síntesis y Sabiduría"
+        super().__init__("Sage", "Síntesis y Sabiduría")
         self.puede_vetar = False
         
         # Vigila TODOS los principios holísticamente

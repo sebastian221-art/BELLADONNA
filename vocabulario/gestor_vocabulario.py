@@ -28,7 +28,7 @@ class GestorVocabulario:
         PATRÓN: Importar y extender, nunca modificar.
         """
         
-        # SEMANA 1: Fundamentos (25 conceptos)
+        # SEMANA 1: Fundamentos (30 conceptos)
         from vocabulario.semana1_operaciones import obtener_conceptos_operaciones
         from vocabulario.semana1_conversacion import obtener_conceptos_conversacion
         from vocabulario.semana1_cognitivos import obtener_conceptos_cognitivos
@@ -39,20 +39,30 @@ class GestorVocabulario:
         self.conceptos.extend(obtener_conceptos_cognitivos())     # 10 conceptos
         self.conceptos.extend(obtener_conceptos_acciones())       # 5 conceptos
         
-        # SEMANA 2: (Agregar después - NO MODIFICAR arriba)
+        # SEMANA 2: Traducción (40 conceptos)
         from vocabulario.semana2_python import obtener_conceptos_python
-        from vocabulario.semana2_verbos import obtener_conceptos_verbos          # ← NUEVO
-        from vocabulario.semana2_conectores import obtener_conceptos_conectores  # ← NUEVO
-        from vocabulario.semana2_adjetivos import obtener_conceptos_adjetivos    # ← NUEVO
+        from vocabulario.semana2_verbos import obtener_conceptos_verbos
+        from vocabulario.semana2_conectores import obtener_conceptos_conectores
+        from vocabulario.semana2_adjetivos import obtener_conceptos_adjetivos
         
-        self.conceptos.extend(obtener_conceptos_python())      # 15
-        self.conceptos.extend(obtener_conceptos_verbos())      # 10 ← NUEVO
-        self.conceptos.extend(obtener_conceptos_conectores())  # 10 ← NUEVO
-        self.conceptos.extend(obtener_conceptos_adjetivos())   # 5  ← NUEVO
+        self.conceptos.extend(obtener_conceptos_python())         # 15
+        self.conceptos.extend(obtener_conceptos_verbos())         # 10
+        self.conceptos.extend(obtener_conceptos_conectores())     # 10
+        self.conceptos.extend(obtener_conceptos_adjetivos())      # 5
         
-        # SEMANA 3: (Agregar después)
-        # from vocabulario.semana3_avanzados import obtener_conceptos_avanzados
-        # self.conceptos.extend(obtener_conceptos_avanzados())
+        # SEMANA 2.5: Python Avanzado (40 conceptos)
+        from vocabulario.semana3_python_avanzado import obtener_conceptos_python_avanzado
+        
+        self.conceptos.extend(obtener_conceptos_python_avanzado())  # 40
+        
+        # SEMANA 3: Vocabulario Expandido (80 conceptos) ← AGREGAR ESTAS 6 LÍNEAS
+        from vocabulario.semana3_sistema_avanzado import obtener_conceptos_sistema_avanzado
+        from vocabulario.semana3_matematicas import obtener_conceptos_matematicas
+        from vocabulario.semana3_conversacion_expandida import obtener_conceptos_conversacion_expandida
+        
+        self.conceptos.extend(obtener_conceptos_sistema_avanzado())        # 30
+        self.conceptos.extend(obtener_conceptos_matematicas())             # 20
+        self.conceptos.extend(obtener_conceptos_conversacion_expandida())  # 30
     
     def obtener_todos(self) -> List[ConceptoAnclado]:
         """Retorna todos los conceptos cargados."""

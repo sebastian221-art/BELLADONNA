@@ -105,10 +105,11 @@ def test_agradecimiento(bell):
 # TESTS DE NO ENTENDIDO
 def test_no_entendido(bell):
     """Test: Maneja input desconocido."""
-    resultado = procesar_mensaje(bell, "xyz abc qwerty")
+    # CAMBIAR: palabras sin significado
+    resultado = procesar_mensaje(bell, "zzzxxx qqwweerr")
     assert resultado['decision'].tipo == TipoDecision.NO_ENTENDIDO
     assert 'entend' in resultado['respuesta'].lower() or 'reconozco' in resultado['respuesta'].lower()
-
+    
 # TESTS DE NEGATIVAS (conceptos sin operaciones)
 def test_negativa_como(bell):
     """Test: Bell no puede responder 'cómo'."""

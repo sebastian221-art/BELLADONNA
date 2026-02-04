@@ -25,8 +25,7 @@ class Luna(Consejera):
     
     def __init__(self):
         """Inicializa Luna."""
-        super().__init__("Luna")
-        self.especialidad = "Intuición y Patrones"
+        super().__init__("Luna", "Intuición y Patrones")
         self.puede_vetar = False
         
         # Vigila TODOS los principios desde perspectiva holística

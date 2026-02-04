@@ -25,8 +25,7 @@ class Iris(Consejera):
     
     def __init__(self):
         """Inicializa Iris."""
-        super().__init__("Iris")
-        self.especialidad = "Visión y Largo Plazo"
+        super().__init__("Iris", "Visión y Largo Plazo")
         self.puede_vetar = False
         
         # Principios que vigila
