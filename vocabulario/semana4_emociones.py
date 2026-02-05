@@ -3,6 +3,9 @@ Conceptos de Emociones - Semana 4.
 
 15 conceptos de estados emocionales y sentimientos.
 Grounding medio-bajo (0.60-0.75) - son abstractos.
+
+NOTA: CONCEPTO_SEGURO renombrado a CONCEPTO_SEGURO_EMOCION
+para evitar duplicado con CONCEPTO_SEGURO de Semana 3.
 """
 from core.concepto_anclado import ConceptoAnclado
 from core.tipos import TipoConcepto
@@ -146,10 +149,10 @@ def obtener_conceptos_emociones():
         }
     ))
     
-    # ACTITUDES (4)
+    # ACTITUDES (4) - CONCEPTO_SEGURO renombrado a CONCEPTO_SEGURO_EMOCION
     
     conceptos.append(ConceptoAnclado(
-        id="CONCEPTO_SEGURO",
+        id="CONCEPTO_SEGURO_EMOCION",  # ← RENOMBRADO para evitar duplicado
         tipo=TipoConcepto.CONCEPTO_ABSTRACTO,
         palabras_español=["seguro", "confiado", "confident"],
         confianza_grounding=0.70,

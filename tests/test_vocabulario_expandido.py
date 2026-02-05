@@ -1,8 +1,8 @@
 """
 Tests para Vocabulario Expandido.
 
-Verifica la expansión con Python avanzado y Semana 3.
-Total esperado: 190 conceptos.
+Verifica la expansión con Python avanzado, Semana 3 y Semana 4.
+Total esperado: 224 conceptos.
 """
 import pytest
 from vocabulario.gestor_vocabulario import GestorVocabulario
@@ -13,10 +13,10 @@ def gestor():
     return GestorVocabulario()
 
 def test_total_conceptos_expandido(gestor):
-    """Test: Total debe ser 190 (70 + 40 + 80)."""
+    """Test: Total debe ser 225 (70 + 40 + 80 + 35)."""
     conceptos = gestor.obtener_todos()
-    # Semana 1+2: 70 + Python Avanzado: 40 + Semana 3: 80 = 190
-    assert len(conceptos) == 190, f"Esperados 190, encontrados {len(conceptos)}"
+    # Semana 1+2: 70 + Python Avanzado: 40 + Semana 3: 80 + Semana 4: 35 = 225
+    assert len(conceptos) == 225, f"Esperados 225, encontrados {len(conceptos)}"
 
 def test_conceptos_python_avanzado(gestor):
     """Test: Conceptos de Python avanzado presentes."""

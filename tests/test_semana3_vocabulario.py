@@ -1,7 +1,7 @@
 """
 Tests para Vocabulario Semana 3 - 80 conceptos adicionales.
 
-Total esperado: 110 (previo) + 80 (semana 3) = 190
+Total esperado: 110 (previo) + 80 (semana 3) + 34 (semana 4) = 224
 """
 import pytest
 from vocabulario.gestor_vocabulario import GestorVocabulario
@@ -12,9 +12,9 @@ def gestor():
     return GestorVocabulario()
 
 def test_total_190_conceptos(gestor):
-    """Test: Total debe ser 190 (110 + 80)."""
+    """Test: Total debe ser 225 (110 + 80 + 35)."""
     conceptos = gestor.obtener_todos()
-    assert len(conceptos) == 190, f"Esperados 190, encontrados {len(conceptos)}"
+    assert len(conceptos) == 225, f"Esperados 225, encontrados {len(conceptos)}"
 
 def test_sistema_avanzado(gestor):
     """Test: Conceptos de sistema avanzado presentes."""

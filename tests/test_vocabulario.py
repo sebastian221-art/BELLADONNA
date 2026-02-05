@@ -13,15 +13,15 @@ def gestor():
 def test_total_conceptos(gestor):
     """Test: Total de conceptos cargados."""
     conceptos = gestor.obtener_todos()
-    # Semana 1: 30 + Semana 2: 40 + Python Avanzado: 40 + Semana 3: 80 = 190
-    assert len(conceptos) == 190, f"Esperados 190, encontrados {len(conceptos)}"
+    # Semana 1: 30 + Semana 2: 40 + Python Avanzado: 40 + Semana 3: 80 + Semana 4: 35 = 225
+    assert len(conceptos) == 225, f"Esperados 225, encontrados {len(conceptos)}"
 
 def test_estadisticas_basicas(gestor):
     """Test: Estadísticas del vocabulario."""
     stats = gestor.estadisticas()
     
-    # CORREGIDO: 190 conceptos totales
-    assert stats['total_conceptos'] == 190
+    # CORREGIDO: 225 conceptos totales
+    assert stats['total_conceptos'] == 225
     assert stats['grounding_promedio'] >= 0.70
     assert stats['con_operaciones'] >= 5
     assert 'por_tipo' in stats

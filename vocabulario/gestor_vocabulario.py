@@ -63,7 +63,15 @@ class GestorVocabulario:
         self.conceptos.extend(obtener_conceptos_sistema_avanzado())        # 30
         self.conceptos.extend(obtener_conceptos_matematicas())             # 20
         self.conceptos.extend(obtener_conceptos_conversacion_expandida())  # 30
-    
+
+        # SEMANA 4: Acciones, Emociones, Tiempo (40 conceptos)
+        from vocabulario.semana4_acciones import obtener_conceptos_acciones as obtener_acciones_s4
+        from vocabulario.semana4_emociones import obtener_conceptos_emociones
+        from vocabulario.semana4_tiempo import obtener_conceptos_tiempo
+
+        self.conceptos.extend(obtener_acciones_s4())     # 10 (renombrado para evitar conflicto)
+        self.conceptos.extend(obtener_conceptos_emociones())  # 15
+        self.conceptos.extend(obtener_conceptos_tiempo())     # 15
     def obtener_todos(self) -> List[ConceptoAnclado]:
         """Retorna todos los conceptos cargados."""
         return self.conceptos
